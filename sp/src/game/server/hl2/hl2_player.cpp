@@ -263,8 +263,7 @@ void CC_ToggleDuck( void )
 		bChecked = true;
 		pCVcl_forwardspeed = ( ConVar * )cvar->FindVar( "cl_forwardspeed" );
 	}
-
-
+	//m_nEnergyCharge
 	// If we're not ducked, do extra checking
 	if ( xc_use_crouch_limiter.GetBool() )
 	{
@@ -906,6 +905,7 @@ void CHL2_Player::PostThink( void )
 
 void CHL2_Player::StartAdmireGlovesAnimation( void )
 {
+	return; // don't
 	MDLCACHE_CRITICAL_SECTION();
 	CBaseViewModel *vm = GetViewModel( 0 );
 

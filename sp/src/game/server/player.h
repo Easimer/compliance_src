@@ -1213,6 +1213,18 @@ private:
 public:
 	virtual unsigned int PlayerSolidMask( bool brushOnly = false ) const;	// returns the solid mask for the given player, so bots can have a more-restrictive set
 
+private:
+	CBaseEntity* m_pCurrentPhaseField;
+public:
+	void SetPhaseField(CBaseEntity*);
+	CBaseEntity* GetPhaseField();
+
+	void TakeDamage(const CTakeDamageInfo &inputInfo);
+	float GetIntegrity() { return m_fIntegrity; }
+	void SetIntegrity(float v) { m_fIntegrity = v; }
+private:
+	CNetworkVar(float, m_fIntegrity);
+	
 };
 
 typedef CHandle<CBasePlayer> CBasePlayerHandle;

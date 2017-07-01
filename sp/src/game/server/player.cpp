@@ -452,7 +452,7 @@ BEGIN_DATADESC( CBasePlayer )
 
 	DEFINE_FIELD( m_nNumCrateHudHints, FIELD_INTEGER ),
 
-
+	DEFINE_FIELD(m_fIntegrity, FIELD_FLOAT),
 
 	// DEFINE_FIELD( m_nBodyPitchPoseParam, FIELD_INTEGER ),
 	// DEFINE_ARRAY( m_StepSoundCache, StepSoundCache_t,  2  ),
@@ -635,6 +635,10 @@ CBasePlayer::CBasePlayer( )
 
 	m_flLastUserCommandTime = 0.f;
 	m_flMovementTimeForUserCmdProcessingRemaining = 0.0f;
+
+	m_pCurrentPhaseField = NULL;
+
+	m_fIntegrity = 100;
 }
 
 CBasePlayer::~CBasePlayer( )
@@ -5038,6 +5042,8 @@ void CBasePlayer::Spawn( void )
 	UpdateLastKnownArea();
 
 	m_weaponFiredTimer.Invalidate();
+
+	m_fIntegrity = 100;
 }
 
 void CBasePlayer::Activate( void )
@@ -5242,6 +5248,7 @@ void CBasePlayer::SetArmorValue( int value )
 
 void CBasePlayer::IncrementArmorValue( int nCount, int nMaxValue )
 { 
+	m_fIntegrity += nCount * (1 - sqrt(m_fIntegrity) / 10);
 	m_ArmorValue += nCount;
 	if (nMaxValue > 0)
 	{
@@ -5326,6 +5333,28 @@ void CBasePlayer::CommitSuicide( const Vector &vecForce, bool bExplode /*= false
 	info.SetDamageForce( vecForce );
 	info.SetDamagePosition( WorldSpaceCenter() );
 	TakeDamage( info );
+}
+
+void CBasePlayer::TakeDamage(const CTakeDamageInfo &inputInfo)
+{
+	float fRand = RandomFloat();
+	float fSqrt = sqrt(m_fIntegrity / 100);
+
+	// Having a low integrity permits the chance to dodge a bullet
+	// bcuz it passes straight thru the player :^)
+	if (fRand > fSqrt)
+	{
+		return;
+	}
+	// But if we didn't won the lottery, the damage we take will grow
+	// as the integrity decreases
+
+	CTakeDamageInfo newDamage;
+
+	newDamage.SetDamage(inputInfo.GetDamage() * (1 / fSqrt));
+	newDamage.SetDamageType(inputInfo.GetDamageType());
+
+	BaseClass::TakeDamage(newDamage);
 }
 
 //==============================================
@@ -7968,7 +7997,7 @@ void SendProxy_CropFlagsToPlayerFlagBitsLength( const SendProp *pProp, const voi
 	EXTERN_SEND_TABLE(DT_AttributeList);
 #endif
 
-	IMPLEMENT_SERVERCLASS_ST( CBasePlayer, DT_BasePlayer )
+	IMPLEMENT_SERVERCLASS_ST(CBasePlayer, DT_BasePlayer)
 
 #if defined USES_ECON_ITEMS
 		SendPropDataTable(SENDINFO_DT(m_AttributeList), &REFERENCE_SEND_TABLE(DT_AttributeList)),
@@ -7978,29 +8007,29 @@ void SendProxy_CropFlagsToPlayerFlagBitsLength( const SendProp *pProp, const voi
 
 		SendPropEHandle(SENDINFO(m_hVehicle)),
 		SendPropEHandle(SENDINFO(m_hUseEntity)),
-		SendPropInt		(SENDINFO(m_iHealth), -1, SPROP_VARINT | SPROP_CHANGES_OFTEN ),
-		SendPropInt		(SENDINFO(m_lifeState), 3, SPROP_UNSIGNED ),
-		SendPropInt		(SENDINFO(m_iBonusProgress), 15 ),
-		SendPropInt		(SENDINFO(m_iBonusChallenge), 4 ),
-		SendPropFloat	(SENDINFO(m_flMaxspeed), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
-		SendPropInt		(SENDINFO(m_fFlags), PLAYER_FLAG_BITS, SPROP_UNSIGNED|SPROP_CHANGES_OFTEN, SendProxy_CropFlagsToPlayerFlagBitsLength ),
-		SendPropInt		(SENDINFO(m_iObserverMode), 3, SPROP_UNSIGNED ),
-		SendPropEHandle	(SENDINFO(m_hObserverTarget) ),
-		SendPropInt		(SENDINFO(m_iFOV), 8, SPROP_UNSIGNED ),
-		SendPropInt		(SENDINFO(m_iFOVStart), 8, SPROP_UNSIGNED ),
-		SendPropFloat	(SENDINFO(m_flFOVTime) ),
-		SendPropInt		(SENDINFO(m_iDefaultFOV), 8, SPROP_UNSIGNED ),
-		SendPropEHandle	(SENDINFO(m_hZoomOwner) ),
-		SendPropArray	( SendPropEHandle( SENDINFO_ARRAY( m_hViewModel ) ), m_hViewModel ),
-		SendPropString	(SENDINFO(m_szLastPlaceName) ),
-
+		SendPropInt(SENDINFO(m_iHealth), -1, SPROP_VARINT | SPROP_CHANGES_OFTEN),
+		SendPropInt(SENDINFO(m_lifeState), 3, SPROP_UNSIGNED),
+		SendPropInt(SENDINFO(m_iBonusProgress), 15),
+		SendPropInt(SENDINFO(m_iBonusChallenge), 4),
+		SendPropFloat(SENDINFO(m_flMaxspeed), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f),  // CL
+		SendPropInt(SENDINFO(m_fFlags), PLAYER_FLAG_BITS, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN, SendProxy_CropFlagsToPlayerFlagBitsLength),
+		SendPropInt(SENDINFO(m_iObserverMode), 3, SPROP_UNSIGNED),
+		SendPropEHandle(SENDINFO(m_hObserverTarget)),
+		SendPropInt(SENDINFO(m_iFOV), 8, SPROP_UNSIGNED),
+		SendPropInt(SENDINFO(m_iFOVStart), 8, SPROP_UNSIGNED),
+		SendPropFloat(SENDINFO(m_flFOVTime)),
+		SendPropInt(SENDINFO(m_iDefaultFOV), 8, SPROP_UNSIGNED),
+		SendPropEHandle(SENDINFO(m_hZoomOwner)),
+		SendPropArray(SendPropEHandle(SENDINFO_ARRAY(m_hViewModel)), m_hViewModel),
+		SendPropString(SENDINFO(m_szLastPlaceName)),
+		SendPropFloat(SENDINFO(m_fIntegrity)),
 #if defined USES_ECON_ITEMS
 		SendPropUtlVector( SENDINFO_UTLVECTOR( m_hMyWearables ), MAX_WEARABLES_SENT_FROM_SERVER, SendPropEHandle( NULL, 0 ) ),
 #endif // USES_ECON_ITEMS
 
 		// Data that only gets sent to the local player.
 		SendPropDataTable( "localdata", 0, &REFERENCE_SEND_TABLE(DT_LocalPlayerExclusive), SendProxy_SendLocalDataTable ),
-
+		
 	END_SEND_TABLE()
 
 //=============================================================================
@@ -9333,7 +9362,15 @@ void CBasePlayer::AdjustDrownDmg( int nAmount )
 	}
 }
 
+void CBasePlayer::SetPhaseField(CBaseEntity* pEnt)
+{
+	m_pCurrentPhaseField = pEnt;
+}
 
+CBaseEntity* CBasePlayer::GetPhaseField()
+{
+	return m_pCurrentPhaseField;
+}
 
 #if !defined(NO_STEAM)
 //-----------------------------------------------------------------------------
