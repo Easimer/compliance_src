@@ -578,8 +578,8 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 		return false;
 
 #ifndef _X360
-	s_SteamAPIContext.Init();
-	s_SteamGameServerAPIContext.Init();
+	//s_SteamAPIContext.Init();
+	//s_SteamGameServerAPIContext.Init();
 #endif
 
 	// init each (seperated for ease of debugging)
@@ -792,8 +792,8 @@ void CServerGameDLL::DLLShutdown( void )
 #endif
 
 #ifndef _X360
-	s_SteamAPIContext.Clear(); // Steam API context shutdown
-	s_SteamGameServerAPIContext.Clear();
+	//s_SteamAPIContext.Clear(); // Steam API context shutdown
+	//s_SteamGameServerAPIContext.Clear();
 #endif	
 
 	gameeventmanager = NULL;

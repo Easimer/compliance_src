@@ -29,6 +29,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+[Dd]ebug_mod_episodic/
+[R]elease_mod_episodic/
 
 # OSX/Linux build products
 *.mak

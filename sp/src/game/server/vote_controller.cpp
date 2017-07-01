@@ -777,11 +777,11 @@ int CVoteController::GetWinningVoteOption( void )
 //-----------------------------------------------------------------------------
 void CVoteController::TrackVoteCaller( CBasePlayer *pPlayer )
 {
-	if ( !pPlayer )
+	//if ( !pPlayer )
 		return;
 
 	CSteamID steamID;
-	pPlayer->GetSteamID( &steamID );
+	//pPlayer->GetSteamID( &steamID );
 
 	int iIdx = m_VoteCallers.Find( steamID.ConvertToUint64() );
 	if ( iIdx != m_VoteCallers.InvalidIndex() )
@@ -799,11 +799,11 @@ void CVoteController::TrackVoteCaller( CBasePlayer *pPlayer )
 //-----------------------------------------------------------------------------
 bool CVoteController::CanEntityCallVote( CBasePlayer *pPlayer, int &nCooldown )
 {
-	if ( !pPlayer )
+	//if ( !pPlayer )
 		return false;
 	
 	CSteamID steamID;
-	pPlayer->GetSteamID( &steamID );
+	//pPlayer->GetSteamID( &steamID );
 
 	// Has this SteamID tried to call a vote recently?
 	int iIdx = m_VoteCallers.Find( steamID.ConvertToUint64() );

@@ -761,7 +761,7 @@ int CAI_BaseNPC::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 	// -----------------------------------
 	//  Fire outputs
  	// -----------------------------------
-	if ( m_flLastDamageTime != gpGlobals->curtime )
+	if ( m_flLastDamageTime != gpGlobals->curtime && info.GetAttacker() )
 	{
 		// only fire once per frame
 		m_OnDamaged.FireOutput( info.GetAttacker(), this);
@@ -3900,6 +3900,12 @@ bool CAI_BaseNPC::CheckPVSCondition()
 
 void CAI_BaseNPC::NPCThink( void )
 {
+	extern bool gbTimeStopped;
+	if (gbTimeStopped)
+	{
+		SetNextThink(gpGlobals->curtime + 1);
+		return;
+	}
 	if ( m_bCheckContacts )
 	{
 		CheckPhysicsContacts();
