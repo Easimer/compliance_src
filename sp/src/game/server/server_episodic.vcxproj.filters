@@ -3541,9 +3541,6 @@
     <ClCompile Include="OverwatchHud.cpp">
       <Filter>Compliance\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Compliance\Test</Filter>
-    </ClCompile>
     <ClCompile Include="npc_shade.cpp">
       <Filter>Compliance\Entities</Filter>
     </ClCompile>

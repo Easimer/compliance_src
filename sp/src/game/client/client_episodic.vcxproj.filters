@@ -1916,9 +1916,6 @@
     <ClInclude Include="ShaderEditor\ShaderEditorSystem.h">
       <Filter>Compliance\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="vgui_Panel_MainMenu.h">
-      <Filter>Compliance\HUD</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mp3player.cpp">
@@ -3453,9 +3450,6 @@
     </ClCompile>
     <ClCompile Include="ShaderEditor\ShaderEditorSystem.cpp">
       <Filter>Compliance\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="vgui_Panel_MainMenu.cpp">
-      <Filter>Compliance\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

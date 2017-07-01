@@ -24,8 +24,6 @@
 #include "filesystem.h"
 #include "matsys_controls/matsyscontrols.h"
 
-#include "vgui_Panel_MainMenu.h"
-
 #ifdef SIXENSE
 #include "sixense/in_sixense.h"
 #endif
