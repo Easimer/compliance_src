@@ -33,7 +33,7 @@ void CWeaponPsyArm::Think(void)
 	if (m_iClip1 < 200)
 		m_iClip1++;
 	SetNextThink(gpGlobals->curtime + 0.5f);
-	if (!pPSys)
+	/*if (!pPSys)
 	{
 		Vector vParticle;
 		QAngle aParticle;
@@ -42,11 +42,7 @@ void CWeaponPsyArm::Think(void)
 			DevMsg("[psyarm] weapon particle attach err\n");
 			return;
 		}
-		pPSys = CParticleSystem::CreateParticleSystem("psy_hand_fire", vParticle, aParticle);
-		pPSys->SetParent(this, LookupAttachment("particle"));
-		pPSys->StartParticleSystem();
-		pPSys->StartParticleSystemThink();
-	}
+	}*/
 }
 
 void CWeaponPsyArm::PrimaryAttack()
