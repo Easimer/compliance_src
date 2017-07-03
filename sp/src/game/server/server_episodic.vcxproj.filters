@@ -3583,6 +3583,9 @@
     <ClCompile Include="grenade_hopwire.cpp">
       <Filter>Compliance\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="ScenarioGenerator.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

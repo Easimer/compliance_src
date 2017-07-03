@@ -1922,6 +1922,9 @@
     <ClInclude Include="INewChapters.h">
       <Filter>Compliance\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="IScenario.h">
+      <Filter>Compliance\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mp3player.cpp">
@@ -3461,6 +3464,9 @@
       <Filter>Compliance\HUD</Filter>
     </ClCompile>
     <ClCompile Include="NewChapters.cpp">
+      <Filter>Compliance\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenario.cpp">
       <Filter>Compliance\GUI</Filter>
     </ClCompile>
   </ItemGroup>
