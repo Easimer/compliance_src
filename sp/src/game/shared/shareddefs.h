@@ -112,7 +112,7 @@ public:
 #define TIME_TO_UNDUCK		0.2
 #define TIME_TO_UNDUCK_MS	200.0f
 
-#define MAX_WEAPON_SLOTS		6	// hud item selection slots
+#define MAX_WEAPON_SLOTS		7	// hud item selection slots
 #define MAX_WEAPON_POSITIONS	20	// max number of items within a slot
 #define MAX_ITEM_TYPES			6	// hud item selection slots
 #define MAX_WEAPONS				48	// Max number of weapons available
@@ -209,8 +209,9 @@ enum CastVote
 #define bits_SUIT_DEVICE_SPRINT		0x00000001
 #define bits_SUIT_DEVICE_FLASHLIGHT	0x00000002
 #define bits_SUIT_DEVICE_BREATHER	0x00000004
+#define bits_SUIT_DEVICE_XRAY		0x00000008
 
-#define MAX_SUIT_DEVICES			3
+#define MAX_SUIT_DEVICES			4
 
 
 //===================================================================================================================

@@ -54,7 +54,7 @@ private:
 using namespace vgui;
 
 #ifdef HL2_EPISODIC
-DECLARE_HUDELEMENT( CHudFlashlight );
+//DECLARE_HUDELEMENT( CHudFlashlight );
 #endif // HL2_EPISODIC
 
 //-----------------------------------------------------------------------------

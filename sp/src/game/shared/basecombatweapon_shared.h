@@ -602,6 +602,13 @@ public:
 
 	IPhysicsConstraint		*GetConstraint() { return m_pConstraint; }
 
+	CNetworkVar(bool, m_bIsSuppressed); // Does this weapon have a suppressor
+	CNetworkVar(int, m_iSuppressorDurability); // Durability of the suppressor
+	CNetworkVar(int, m_iSuppressorMaxDurability); // Maximum durability of the suppressor
+
+protected:
+	virtual void SuppressorFailure(void) {};
+
 private:
 	WEAPON_FILE_INFO_HANDLE	m_hWeaponFileInfo;
 	IPhysicsConstraint		*m_pConstraint;

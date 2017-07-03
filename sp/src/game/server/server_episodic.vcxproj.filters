@@ -46,6 +46,9 @@
     <Filter Include="Compliance\Weapons">
       <UniqueIdentifier>{638d64b2-4875-489b-8024-961097213fbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Compliance\Items">
+      <UniqueIdentifier>{cfd63238-b1bf-47a6-93c0-51525f99deb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\lib\public\choreoobjects.lib">
@@ -3558,6 +3561,15 @@
     </ClCompile>
     <ClCompile Include="npc_particlestorm.cpp">
       <Filter>Compliance\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon_silenced.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="XRay.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="item_suppkit.cpp">
+      <Filter>Compliance\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

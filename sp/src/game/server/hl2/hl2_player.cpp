@@ -408,7 +408,8 @@ CHL2_Player::CHL2_Player()
 #endif
 
 #ifdef HL2_EPISODIC
-	CSuitPowerDevice SuitDeviceFlashlight( bits_SUIT_DEVICE_FLASHLIGHT, 1.111 );	// 100 units in 90 second
+	//CSuitPowerDevice SuitDeviceFlashlight( bits_SUIT_DEVICE_FLASHLIGHT, 1.111 );	// 100 units in 90 second
+	CSuitPowerDevice SuitDeviceFlashlight( bits_SUIT_DEVICE_FLASHLIGHT, 20 );	// 100 units in 10 second
 #else
 	CSuitPowerDevice SuitDeviceFlashlight( bits_SUIT_DEVICE_FLASHLIGHT, 2.222 );	// 100 units in 45 second
 #endif
@@ -2007,7 +2008,7 @@ bool CHL2_Player::ApplyBattery( float powerMultiplier )
 		Q_snprintf( szcharge,sizeof(szcharge),"!HEV_%1dP", pct );
 		
 		//UTIL_EmitSoundSuit(edict(), szcharge);
-		//SetSuitUpdate(szcharge, FALSE, SUIT_NEXT_IN_30SEC);
+		SetSuitUpdate(szcharge, FALSE, SUIT_NEXT_IN_30SEC);
 		return true;		
 	}
 	return false;

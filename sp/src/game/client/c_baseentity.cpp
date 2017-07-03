@@ -2951,6 +2951,8 @@ void C_BaseEntity::CreateLightEffects( void )
 {
 	dlight_t *dl;
 
+	return;
+
 	// Is this for player flashlights only, if so move to linkplayers?
 	if ( index == render->GetViewEntity() )
 		return;
@@ -2966,11 +2968,11 @@ void C_BaseEntity::CreateLightEffects( void )
 	}
 	if (IsEffectActive(EF_DIMLIGHT))
 	{			
-		dl = effects->CL_AllocDlight ( index );
+		/*dl = effects->CL_AllocDlight ( index );
 		dl->origin = GetAbsOrigin();
 		dl->color.r = dl->color.g = dl->color.b = 100;
 		dl->radius = random->RandomFloat(200,231);
-		dl->die = gpGlobals->curtime + 0.001;
+		dl->die = gpGlobals->curtime + 0.001;*/
 	}
 }
 

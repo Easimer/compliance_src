@@ -5344,11 +5344,12 @@ void CBasePlayer::TakeDamage(const CTakeDamageInfo &inputInfo)
 	// bcuz it passes straight thru the player :^)
 	if (fRand > fSqrt)
 	{
+		DevMsg("Integrity Dodge\n");
 		return;
 	}
 	// But if we didn't won the lottery, the damage we take will grow
 	// as the integrity decreases
-
+	DevMsg("Raised Damage\n");
 	CTakeDamageInfo newDamage;
 
 	newDamage.SetDamage(inputInfo.GetDamage() * (1 / fSqrt));

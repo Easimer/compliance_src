@@ -102,7 +102,8 @@ void CHudSuitPower::OnThink( void )
 	bool flashlightActive = pPlayer->IsFlashlightActive();
 	bool sprintActive = pPlayer->IsSprinting();
 	bool breatherActive = pPlayer->IsBreatherActive();
-	int activeDevices = (int)flashlightActive + (int)sprintActive + (int)breatherActive;
+	bool xrayActive = pPlayer->IsXRayActive();
+	int activeDevices = (int)flashlightActive + (int)sprintActive + (int)breatherActive + (int)xrayActive;
 
 	if (activeDevices != m_iActiveSuitDevices)
 	{
@@ -111,6 +112,7 @@ void CHudSuitPower::OnThink( void )
 		switch ( m_iActiveSuitDevices )
 		{
 		default:
+		case 4:
 		case 3:
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("SuitAuxPowerThreeItemsActive");
 			break;
@@ -248,6 +250,22 @@ void CHudSuitPower::Paint()
 			else
 			{
 				surface()->DrawPrintText(L"SPRINT", wcslen(L"SPRINT"));
+			}
+			ypos += text2_gap;
+		}
+		if (pPlayer->IsXRayActive())
+		{
+			tempString = g_pVGuiLocalize->Find("#Valve_Hud_XRAY");
+
+			surface()->DrawSetTextPos(text2_xpos, ypos);
+
+			if (tempString)
+			{
+				surface()->DrawPrintText(tempString, wcslen(tempString));
+			}
+			else
+			{
+				surface()->DrawPrintText(L"X-RAY", wcslen(L"X-RAY"));
 			}
 			ypos += text2_gap;
 		}

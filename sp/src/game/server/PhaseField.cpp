@@ -120,8 +120,8 @@ void IN_PhaseDown(const CCommand& args)
 	/*CTakeDamageInfo dmginfo;
 	dmginfo.AddDamageType(DMG_RADIATION);
 	dmginfo.AddDamage(RandomInt(3, 7));
-	pPlayer->TakeDamage(dmginfo);
-	pPlayer->ViewPunch(QAngle(30, 20, 20));*/
+	pPlayer->TakeDamage(dmginfo);*/
+	pPlayer->ViewPunch(QAngle(30, 20, 20));
 	pPlayer->SetIntegrity(pPlayer->GetIntegrity() - 2);
 
 	pPair->FirePhaseEvent(pPlayer);

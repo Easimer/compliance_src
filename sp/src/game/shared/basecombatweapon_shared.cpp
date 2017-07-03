@@ -214,6 +214,12 @@ void CBaseCombatWeapon::Spawn( void )
 	m_iReloadHudHintCount = 0;
 	m_iAltFireHudHintCount = 0;
 	m_flHudHintMinDisplayTime = 0;
+//#if !defined( CLIENT_DLL )
+#if 0
+	m_bIsSuppressed = false;
+	m_iSuppressorDurability = 0;
+	m_iSuppressorMaxDurability = 0;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1894,7 +1900,7 @@ void CBaseCombatWeapon::WeaponSound( WeaponSound_t sound_type, float soundtime /
 			EmitSound( filter, GetOwner()->entindex(), shootsound, NULL, soundtime ); 
 
 #if !defined( CLIENT_DLL )
-			if( sound_type == EMPTY )
+			if( sound_type == EMPTY && !m_bIsSuppressed)
 			{
 				CSoundEnt::InsertSound( SOUND_COMBAT, GetOwner()->GetAbsOrigin(), SOUNDENT_VOLUME_EMPTY, 0.2, GetOwner() );
 			}
@@ -2315,6 +2321,19 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 
 	//Add our view kick in
 	AddViewKick();
+
+	if (m_bIsSuppressed)
+	{
+		if (m_iSuppressorDurability > 0)
+		{
+			m_iSuppressorDurability--;
+			if (m_iSuppressorDurability == 0)
+			{
+				pPlayer->SetSuitUpdate("!HEV_SUPPF", FALSE, 0);
+				SuppressorFailure();
+			}
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -2736,34 +2755,37 @@ REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendNonLocalWeaponDataTable 
 //-----------------------------------------------------------------------------
 // Purpose: Propagation data for weapons. Only sent when a player's holding it.
 //-----------------------------------------------------------------------------
-BEGIN_NETWORK_TABLE_NOBASE( CBaseCombatWeapon, DT_LocalActiveWeaponData )
+BEGIN_NETWORK_TABLE_NOBASE(CBaseCombatWeapon, DT_LocalActiveWeaponData)
 #if !defined( CLIENT_DLL )
-	SendPropTime( SENDINFO( m_flNextPrimaryAttack ) ),
-	SendPropTime( SENDINFO( m_flNextSecondaryAttack ) ),
-	SendPropInt( SENDINFO( m_nNextThinkTick ) ),
-	SendPropTime( SENDINFO( m_flTimeWeaponIdle ) ),
+SendPropTime( SENDINFO( m_flNextPrimaryAttack ) ),
+SendPropTime( SENDINFO( m_flNextSecondaryAttack ) ),
+SendPropInt( SENDINFO( m_nNextThinkTick ) ),
+SendPropTime( SENDINFO( m_flTimeWeaponIdle ) ),
 
 #if defined( TF_DLL )
-	SendPropExclude( "DT_AnimTimeMustBeFirst" , "m_flAnimTime" ),
+SendPropExclude( "DT_AnimTimeMustBeFirst" , "m_flAnimTime" ),
 #endif
 
 #else
-	RecvPropTime( RECVINFO( m_flNextPrimaryAttack ) ),
-	RecvPropTime( RECVINFO( m_flNextSecondaryAttack ) ),
-	RecvPropInt( RECVINFO( m_nNextThinkTick ) ),
-	RecvPropTime( RECVINFO( m_flTimeWeaponIdle ) ),
+RecvPropTime(RECVINFO(m_flNextPrimaryAttack)),
+RecvPropTime(RECVINFO(m_flNextSecondaryAttack)),
+RecvPropInt(RECVINFO(m_nNextThinkTick)),
+RecvPropTime(RECVINFO(m_flTimeWeaponIdle)),
 #endif
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
 // Purpose: Propagation data for weapons. Only sent when a player's holding it.
 //-----------------------------------------------------------------------------
-BEGIN_NETWORK_TABLE_NOBASE( CBaseCombatWeapon, DT_LocalWeaponData )
+BEGIN_NETWORK_TABLE_NOBASE(CBaseCombatWeapon, DT_LocalWeaponData)
 #if !defined( CLIENT_DLL )
-	SendPropIntWithMinusOneFlag( SENDINFO(m_iClip1 ), 8 ),
-	SendPropIntWithMinusOneFlag( SENDINFO(m_iClip2 ), 8 ),
-	SendPropInt( SENDINFO(m_iPrimaryAmmoType ), 8 ),
-	SendPropInt( SENDINFO(m_iSecondaryAmmoType ), 8 ),
+SendPropIntWithMinusOneFlag( SENDINFO(m_iClip1 ), 8 ),
+SendPropIntWithMinusOneFlag( SENDINFO(m_iClip2 ), 8 ),
+SendPropInt( SENDINFO(m_iPrimaryAmmoType ), 8 ),
+SendPropInt( SENDINFO(m_iSecondaryAmmoType ), 8 ),
+SendPropInt(SENDINFO(m_iSuppressorDurability), 8),
+SendPropInt(SENDINFO(m_iSuppressorMaxDurability), 8),
+SendPropBool(SENDINFO(m_bIsSuppressed)),
 
 	SendPropInt( SENDINFO( m_nViewModelIndex ), VIEWMODEL_INDEX_BITS, SPROP_UNSIGNED ),
 
@@ -2778,6 +2800,9 @@ BEGIN_NETWORK_TABLE_NOBASE( CBaseCombatWeapon, DT_LocalWeaponData )
 	RecvPropIntWithMinusOneFlag( RECVINFO(m_iClip2 )),
 	RecvPropInt( RECVINFO(m_iPrimaryAmmoType )),
 	RecvPropInt( RECVINFO(m_iSecondaryAmmoType )),
+	RecvPropInt(RECVINFO(m_iSuppressorDurability)),
+	RecvPropInt(RECVINFO(m_iSuppressorMaxDurability)),
+	RecvPropBool(RECVINFO(m_bIsSuppressed)),
 
 	RecvPropInt( RECVINFO( m_nViewModelIndex ) ),
 
