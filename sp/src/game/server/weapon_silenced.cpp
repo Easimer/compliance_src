@@ -17,7 +17,6 @@ public:
 	void PrimaryAttack(void);
 	void DryFire(void);
 	bool Reload(void);
-	void Think(void);
 	int GetMinBurst(){ return 1; }
 	int GetMaxBurst(){ return 3; }
 	float GetFireRate(void) { return 0.5f; }
@@ -36,7 +35,6 @@ END_NETWORK_TABLE()
 PRECACHE_WEAPON_REGISTER(weapon_silenced);
 
 BEGIN_DATADESC(CWeaponSilenced)
-DEFINE_THINKFUNC(Think),
 END_DATADESC()
 
 BEGIN_PREDICTION_DATA(CWeaponSilenced)
@@ -88,8 +86,6 @@ void CWeaponSilenced::Precache(void)
 
 void CWeaponSilenced::Spawn(void)
 {
-	SetThink(&CWeaponSilenced::Think);
-	SetNextThink(gpGlobals->curtime + 30);
 	BaseClass::Spawn();
 	// pls always set these after spawn
 	m_bIsSuppressed = true;
@@ -139,9 +135,48 @@ bool CWeaponSilenced::Reload(void)
 	return fRet;
 }
 
-void CWeaponSilenced::Think(void)
+void CHEAT_PutSuppressor(const CCommand& cmd)
 {
-	if (m_iSuppressorDurability < m_iSuppressorMaxDurability)
-		m_iSuppressorDurability++;
-	SetNextThink(gpGlobals->curtime + 30);
+	CBasePlayer* pPlayer = UTIL_GetLocalPlayer();
+	if (!pPlayer)
+		return;
+	CBaseCombatWeapon* pWeapon = pPlayer->GetActiveWeapon();
+	if (!pWeapon)
+		return;
+	pWeapon->m_bIsSuppressed = true;
 }
+
+void CHEAT_SetSuppressorDurability(const CCommand& cmd)
+{
+	if (cmd.ArgC() < 2)
+		return;
+	CBasePlayer* pPlayer = UTIL_GetLocalPlayer();
+	if (!pPlayer)
+		return;
+	CBaseCombatWeapon* pWeapon = pPlayer->GetActiveWeapon();
+	if (!pWeapon)
+		return;
+	int nVal;
+	const char* szVal = cmd.ArgV()[1];
+	nVal = V_atoi(szVal);
+	pWeapon->m_iSuppressorDurability = nVal;
+}
+void CHEAT_SetSuppressorMaxDurability(const CCommand& cmd)
+{
+	if (cmd.ArgC() < 2)
+		return;
+	CBasePlayer* pPlayer = UTIL_GetLocalPlayer();
+	if (!pPlayer)
+		return;
+	CBaseCombatWeapon* pWeapon = pPlayer->GetActiveWeapon();
+	if (!pWeapon)
+		return;
+	int nVal;
+	const char* szVal = cmd.ArgV()[1];
+	nVal = V_atoi(szVal);
+	pWeapon->m_iSuppressorMaxDurability = nVal;
+}
+
+static ConCommand sv_putsuppressor("sv_putsuppressor", CHEAT_PutSuppressor, "Puts suppressor on the current weapon");
+static ConCommand sv_setsuppressor("sv_setsuppressor_dur", CHEAT_SetSuppressorDurability, "Sets the current weapons's suppressor durability");
+static ConCommand sv_setsuppressormax("sv_setsuppressor_maxdur", CHEAT_SetSuppressorMaxDurability, "Sets the current weapons's maximum suppressor durability");

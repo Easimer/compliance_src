@@ -58,6 +58,9 @@
     <Filter Include="Compliance\SSE">
       <UniqueIdentifier>{d78e21c0-5e16-46ce-98dc-c5a2d8d10d07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Compliance\GUI">
+      <UniqueIdentifier>{16de847f-79c8-478c-9351-30a7a3e3b1ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\lib\public\bitmap.lib">
@@ -1916,6 +1919,9 @@
     <ClInclude Include="ShaderEditor\ShaderEditorSystem.h">
       <Filter>Compliance\SSE</Filter>
     </ClInclude>
+    <ClInclude Include="INewChapters.h">
+      <Filter>Compliance\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mp3player.cpp">
@@ -3453,6 +3459,9 @@
     </ClCompile>
     <ClCompile Include="hud_suppressor.cpp">
       <Filter>Compliance\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="NewChapters.cpp">
+      <Filter>Compliance\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

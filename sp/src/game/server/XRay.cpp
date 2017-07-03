@@ -3,7 +3,7 @@
 
 CSuitPowerDevice SuitDeviceXRay(bits_SUIT_DEVICE_XRAY, 20);
 
-void IN_XRayOn(const CCommand& args)
+void TurnXRayOn()
 {
 	CBasePlayer* pPlayer = UTIL_GetLocalPlayer();
 	if (!pPlayer)
@@ -19,7 +19,7 @@ void IN_XRayOn(const CCommand& args)
 		CBaseCombatCharacter* pCombatChar = ToBaseCombatCharacter(pNPC);
 		if (pCombatChar)
 		{
-			if ((pPlayer->GetAbsOrigin() - pCombatChar->GetAbsOrigin()).Length() <= 512)
+			if ((pPlayer->GetAbsOrigin() - pCombatChar->GetAbsOrigin()).Length() <= 1024)
 			{
 				pCombatChar->AddGlowEffect();
 			}
@@ -28,7 +28,7 @@ void IN_XRayOn(const CCommand& args)
 	}
 }
 
-void IN_XRayOff(const CCommand& args)
+void TurnXRayOff()
 {
 	CBasePlayer* pPlayer = UTIL_GetLocalPlayer();
 	if (!pPlayer)
@@ -51,6 +51,16 @@ void IN_XRayOff(const CCommand& args)
 		}
 		pNPC = gEntList.FindEntityByClassname(pNPC, "npc_*");
 	}
+}
+
+void IN_XRayOn(const CCommand& args)
+{
+	TurnXRayOn();
+}
+
+void IN_XRayOff(const CCommand& args)
+{
+	TurnXRayOff();
 }
 
 static ConCommand bind_xray_on("+xray", IN_XRayOn);

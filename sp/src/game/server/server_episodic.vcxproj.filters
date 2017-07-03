@@ -1814,6 +1814,9 @@
     <ClInclude Include="weapon_psygun.h">
       <Filter>Compliance\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="xray.h">
+      <Filter>Compliance\Weapons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gamedll_replay.cpp">
@@ -3570,6 +3573,15 @@
     </ClCompile>
     <ClCompile Include="item_suppkit.cpp">
       <Filter>Compliance\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon_decoy.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon_hopwire.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="grenade_hopwire.cpp">
+      <Filter>Compliance\Weapons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -46,6 +46,9 @@
 #include "gamestats.h"
 #include "filters.h"
 #include "tier0/icommandline.h"
+#if !defined(CLIENT_DLL)
+#include "xray.h"
+#endif
 
 #ifdef HL2_EPISODIC
 #include "npc_alyx_episodic.h"
@@ -1832,6 +1835,7 @@ void CHL2_Player::SuitPower_Update( void )
 #endif
 				}
 			}
+			TurnXRayOff();
 		}
 
 		if ( Flashlight_UseLegacyVersion() )
