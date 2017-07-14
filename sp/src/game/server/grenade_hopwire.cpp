@@ -14,6 +14,7 @@
 #include "explode.h"
 #include "physics_prop_ragdoll.h"
 #include "movevars_shared.h"
+#include "vortex_controller.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -30,33 +31,6 @@ ConVar g_debug_hopwire("g_debug_hopwire", "0");
 #define	DENSE_BALL_MODEL	"models/props_junk/metal_paintcan001b.mdl"
 
 #define	MAX_HOP_HEIGHT		(hopwire_hopheight.GetFloat())		// Maximum amount the grenade will "hop" upwards when detonated
-
-class CGravityVortexController : public CBaseEntity
-{
-	DECLARE_CLASS(CGravityVortexController, CBaseEntity);
-	DECLARE_DATADESC();
-
-public:
-
-	CGravityVortexController(void) : m_flEndTime(0.0f), m_flRadius(256), m_flStrength(256), m_flMass(0.0f) {}
-	float	GetConsumedMass(void) const;
-
-	static CGravityVortexController *Create(const Vector &origin, float radius, float strength, float duration);
-
-private:
-
-	void	ConsumeEntity(CBaseEntity *pEnt);
-	void	PullPlayersInRange(void);
-	bool	KillNPCInRange(CBaseEntity *pVictim, IPhysicsObject **pPhysObj);
-	void	CreateDenseBall(void);
-	void	PullThink(void);
-	void	StartPull(const Vector &origin, float radius, float strength, float duration);
-
-	float	m_flMass;		// Mass consumed by the vortex
-	float	m_flEndTime;	// Time when the vortex will stop functioning
-	float	m_flRadius;		// Area of effect for the vortex
-	float	m_flStrength;	// Pulling strength of the vortex
-};
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the amount of mass consumed by the vortex
@@ -103,6 +77,9 @@ void CGravityVortexController::ConsumeEntity(CBaseEntity *pEnt)
 void CGravityVortexController::PullPlayersInRange(void)
 {
 	CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
+
+	if (!pPlayer)
+		return;
 
 	Vector	vecForce = GetAbsOrigin() - pPlayer->WorldSpaceCenter();
 	float	dist = VectorNormalize(vecForce);
@@ -260,7 +237,7 @@ void CGravityVortexController::PullThink(void)
 		float	dist = VectorNormalize(vecForce);
 
 		// FIXME: Need a more deterministic method here
-		if (dist < 48.0f)
+		if (dist < m_flRadius)
 		{
 			ConsumeEntity(pEnts[i]);
 			continue;

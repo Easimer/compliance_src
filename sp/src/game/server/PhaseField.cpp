@@ -21,7 +21,7 @@ void CPhaseField::Spawn()
 	m_pAnchor = (CPhaseAnchor*)gEntList.FindEntityGeneric(NULL, STRING(m_sAnchor), this);
 	if (m_pAnchor == NULL)
 	{
-		Warning("Anchor of %s was not found\n", GetEntityName().ToCStr());
+		Warning("Anchor of %s was not found\n", GetEntityName());
 	}
 	SetTouch(&CPhaseField::StartTouch);
 	SetSolid(SOLID_VPHYSICS);
@@ -47,6 +47,7 @@ void CPhaseField::StartTouch(CBaseEntity* other)
 	if (!pPlayer || pPlayer != other)
 		return;
 	pPlayer->SetPhaseField(this);
+	DevMsg("Player entered phase field %s\n", GetEntityName());
 	BaseClass::StartTouch(other);
 }
 
@@ -56,6 +57,7 @@ void CPhaseField::EndTouch(CBaseEntity* other)
 	if (!pPlayer || pPlayer != other)
 		return;
 	pPlayer->SetPhaseField(NULL);
+	DevMsg("Player left phase field %s\n", GetEntityName());
 	BaseClass::EndTouch(other);
 }
 
@@ -81,14 +83,15 @@ bool CPhaseField::IsUnstable()
 
 void IN_PhaseDown(const CCommand& args)
 {
+	DevMsg("\nPhaseDown:\n");
 	CBasePlayer* pPlayer = UTIL_GetLocalPlayer();
 	if (!pPlayer)
 		return;
-	//DevMsg("Player OK\n");
+	DevMsg("Player OK\n");
 	CPhaseField* pEnt = (CPhaseField*)pPlayer->GetPhaseField();
 	if (!pEnt)
 		return;
-	//DevMsg("Field OK\n");
+	DevMsg("Field OK\n");
 
 	if (gpGlobals->curtime - pEnt->GetLastPhaseTime() < 3)
 		return;
@@ -96,11 +99,11 @@ void IN_PhaseDown(const CCommand& args)
 	CPhaseAnchor* pAnchor = pEnt->GetAnchor();
 	if (!pAnchor)
 		return;
-	//DevMsg("Anchor OK\n");
+	DevMsg("Anchor OK\n");
 	CPhaseAnchor* pPair = pAnchor->GetPair();
 	if (!pPair)
 		return;
-	//DevMsg("Pair OK\n");
+	DevMsg("Pair OK\n");
 	Vector vecPair = pPair->GetAbsOrigin();
 	Vector vecAnchor = pAnchor->GetAbsOrigin();
 	Vector vecDiff = vecPair - vecAnchor;

@@ -14,13 +14,15 @@
 
 LINK_ENTITY_TO_CLASS( basehlcombatweapon, CBaseHLCombatWeapon );
 
-IMPLEMENT_NETWORKCLASS_ALIASED( BaseHLCombatWeapon , DT_BaseHLCombatWeapon )
+IMPLEMENT_NETWORKCLASS_ALIASED(BaseHLCombatWeapon, DT_BaseHLCombatWeapon)
 
-BEGIN_NETWORK_TABLE( CBaseHLCombatWeapon , DT_BaseHLCombatWeapon )
+BEGIN_NETWORK_TABLE(CBaseHLCombatWeapon, DT_BaseHLCombatWeapon)
 #if !defined( CLIENT_DLL )
 //	SendPropInt( SENDINFO( m_bReflectViewModelAnimations ), 1, SPROP_UNSIGNED ),
+SendPropInt(SENDINFO(m_iCustomColor), 1, SPROP_UNSIGNED),
 #else
 //	RecvPropInt( RECVINFO( m_bReflectViewModelAnimations ) ),
+RecvPropInt(RECVINFO(m_iCustomColor)),
 #endif
 END_NETWORK_TABLE()
 
@@ -39,6 +41,8 @@ BEGIN_DATADESC( CBaseHLCombatWeapon )
 	DEFINE_FIELD( m_flHolsterTime,		FIELD_TIME ),
 	DEFINE_FIELD( m_iPrimaryAttacks,	FIELD_INTEGER ),
 	DEFINE_FIELD( m_iSecondaryAttacks,	FIELD_INTEGER ),
+
+	DEFINE_FIELD( m_iCustomColor,		FIELD_INTEGER ),
 
 END_DATADESC()
 

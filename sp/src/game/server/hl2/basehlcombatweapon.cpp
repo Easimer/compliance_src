@@ -70,7 +70,8 @@ void CHLMachineGun::PrimaryAttack( void )
 	// MUST call sound before removing a round from the clip of a CHLMachineGun
 	while ( m_flNextPrimaryAttack <= gpGlobals->curtime )
 	{
-		WeaponSound(SINGLE, m_flNextPrimaryAttack);
+		if (!m_bIsSuppressed || m_iSuppressorDurability == 0)
+			WeaponSound(SINGLE, m_flNextPrimaryAttack);
 		m_flNextPrimaryAttack = m_flNextPrimaryAttack + fireRate;
 		iBulletsToFire++;
 	}
@@ -100,7 +101,8 @@ void CHLMachineGun::PrimaryAttack( void )
 	//Factor in the view kick
 	AddViewKick();
 
-	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_MACHINEGUN, 0.2, pPlayer );
+	if (!m_bIsSuppressed || m_iSuppressorDurability == 0)
+		CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_MACHINEGUN, 0.2, pPlayer );
 	
 	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{
@@ -113,6 +115,19 @@ void CHLMachineGun::PrimaryAttack( void )
 
 	// Register a muzzleflash for the AI
 	pPlayer->SetMuzzleFlashTime( gpGlobals->curtime + 0.5 );
+
+	if (m_bIsSuppressed)
+	{
+		if (m_iSuppressorDurability > 0)
+		{
+			m_iSuppressorDurability--;
+			if (m_iSuppressorDurability == 0)
+			{
+				pPlayer->SetSuitUpdate("!HEV_SUPPF", FALSE, 0);
+				SuppressorFailure();
+			}
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------

@@ -61,6 +61,15 @@
     <Filter Include="Compliance\GUI">
       <UniqueIdentifier>{16de847f-79c8-478c-9351-30a7a3e3b1ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Compliance\Scenario">
+      <UniqueIdentifier>{13b7356a-4ef5-4ee2-a1de-98ff04953aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Test">
+      <UniqueIdentifier>{e7bb6f47-4a86-460e-b785-3df077d1ec27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Tech">
+      <UniqueIdentifier>{579653e1-e884-4ae9-a2f4-ed931de9c36b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\lib\public\bitmap.lib">
@@ -1925,6 +1934,18 @@
     <ClInclude Include="IScenario.h">
       <Filter>Compliance\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="IMainMenu.h">
+      <Filter>Compliance\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IGunsmith.h">
+      <Filter>Compliance\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\json.hpp">
+      <Filter>Compliance\Tech</Filter>
+    </ClInclude>
+    <ClInclude Include="dss.h">
+      <Filter>Compliance\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mp3player.cpp">
@@ -3468,6 +3489,27 @@
     </ClCompile>
     <ClCompile Include="Scenario.cpp">
       <Filter>Compliance\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="achievements_compliance.cpp">
+      <Filter>Compliance</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomObjective.cpp">
+      <Filter>Compliance\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Compliance\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponMatProxy.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Gunsmith.cpp">
+      <Filter>Compliance\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicSky.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="hud_flare.cpp">
+      <Filter>Compliance\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

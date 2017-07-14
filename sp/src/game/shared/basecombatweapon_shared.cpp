@@ -2280,7 +2280,8 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 	while ( m_flNextPrimaryAttack <= gpGlobals->curtime )
 	{
 		// MUST call sound before removing a round from the clip of a CMachineGun
-		WeaponSound(SINGLE, m_flNextPrimaryAttack);
+		if (!m_bIsSuppressed && m_iSuppressorDurability != 0)
+			WeaponSound(SINGLE, m_flNextPrimaryAttack);
 		m_flNextPrimaryAttack = m_flNextPrimaryAttack + fireRate;
 		info.m_iShots++;
 		if ( !fireRate )

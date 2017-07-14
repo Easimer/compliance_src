@@ -39,6 +39,8 @@ BEGIN_DATADESC( CSkyCamera )
 	DEFINE_FIELD( m_skyboxData.origin, FIELD_VECTOR ),
 	DEFINE_FIELD( m_skyboxData.area, FIELD_INTEGER ),
 
+	DEFINE_THINKFUNC(Think),
+
 	// Quiet down classcheck
 	// DEFINE_FIELD( m_skyboxData, sky3dparams_t ),
 
@@ -102,10 +104,13 @@ CSkyCamera::~CSkyCamera()
 
 void CSkyCamera::Spawn( void ) 
 { 
-	m_skyboxData.origin = GetLocalOrigin();
+	m_skyboxData.origin = GetAbsOrigin();
 	m_skyboxData.area = engine->GetArea( m_skyboxData.origin );
 	
 	Precache();
+
+	SetThink(&CSkyCamera::Think);
+	SetNextThink(gpGlobals->curtime + gpGlobals->frametime);
 }
 
 
@@ -144,4 +149,13 @@ void CSkyCamera::Activate( )
 		}
 	}
 #endif
+}
+
+void CSkyCamera::Think()
+{
+	m_skyboxData.origin = GetAbsOrigin();
+	m_skyboxData.area = engine->GetArea(m_skyboxData.origin);
+	m_skyboxData.NetworkStateChanged();
+	SetThink(&CSkyCamera::Think);
+	SetNextThink(gpGlobals->curtime + gpGlobals->frametime);
 }

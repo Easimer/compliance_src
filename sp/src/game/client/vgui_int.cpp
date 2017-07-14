@@ -25,6 +25,8 @@
 #include "matsys_controls/matsyscontrols.h"
 
 #include "INewChapters.h"
+#include "IMainMenu.h"
+#include "IGunsmith.h"
 
 #ifdef SIXENSE
 #include "sixense/in_sixense.h"
@@ -200,7 +202,7 @@ void VGui_CreateGlobalPanels( void )
 	VPANEL gameToolParent = enginevgui->GetPanel( PANEL_CLIENTDLL_TOOLS );
 	VPANEL toolParent = enginevgui->GetPanel( PANEL_TOOLS );
 	VPANEL GameUiDll = enginevgui->GetPanel( PANEL_GAMEUIDLL);
-	//VPANEL gameParent = enginevgui->GetPanel( PANEL_CLIENTDLL );
+	VPANEL gameParent = enginevgui->GetPanel( PANEL_CLIENTDLL );
 #if defined( TRACK_BLOCKING_IO )
 	VPANEL gameDLLPanel = enginevgui->GetPanel( PANEL_GAMEDLL );
 #endif
@@ -226,6 +228,8 @@ void VGui_CreateGlobalPanels( void )
 #endif
 
 	ncpanel->Create(GameUiDll);
+	//g_pMainMenu->Create(GameUiDll);
+	g_pGunsmith->Create(gameParent);
 
 	//SMenu->Create(GameUiDll);
 }
@@ -250,6 +254,8 @@ void VGui_Shutdown()
 	internalCenterPrint->Destroy();
 
 	ncpanel->Destroy();
+	//g_pMainMenu->Destroy();
+	g_pGunsmith->Destroy();
 
 	//SMenu->Destroy();
 

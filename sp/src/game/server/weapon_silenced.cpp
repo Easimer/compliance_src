@@ -177,6 +177,6 @@ void CHEAT_SetSuppressorMaxDurability(const CCommand& cmd)
 	pWeapon->m_iSuppressorMaxDurability = nVal;
 }
 
-static ConCommand sv_putsuppressor("sv_putsuppressor", CHEAT_PutSuppressor, "Puts suppressor on the current weapon");
-static ConCommand sv_setsuppressor("sv_setsuppressor_dur", CHEAT_SetSuppressorDurability, "Sets the current weapons's suppressor durability");
-static ConCommand sv_setsuppressormax("sv_setsuppressor_maxdur", CHEAT_SetSuppressorMaxDurability, "Sets the current weapons's maximum suppressor durability");
+static ConCommand sv_putsuppressor("sv_putsuppressor", CHEAT_PutSuppressor, "Puts suppressor on the current weapon", FCVAR_CHEAT);
+static ConCommand sv_setsuppressor("sv_setsuppressor_dur", CHEAT_SetSuppressorDurability, "Sets the current weapons's suppressor durability", FCVAR_CHEAT);
+static ConCommand sv_setsuppressormax("sv_setsuppressor_maxdur", CHEAT_SetSuppressorMaxDurability, "Sets the current weapons's maximum suppressor durability", FCVAR_CHEAT);

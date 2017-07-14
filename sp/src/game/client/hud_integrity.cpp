@@ -21,14 +21,29 @@ void CHudIntegrity::Init()
 	Reset();
 }
 
+void CHudIntegrity::VidInit()
+{
+	Reset();
+}
+
 void CHudIntegrity::Reset()
 {
 	SetBgColor(Color(0, 0, 0, 128));
 	m_fIntegrity = 100;
+	SetShouldDisplayValue(true);
 
-	szLabel = L"INTEGRITY";
-	szLabelSiz = wcslen(szLabel);
-	szDigits[0] = '\0';
+	wchar_t *tempString = g_pVGuiLocalize->Find("#Compliance_Hud_Integrity");
+
+	if (tempString)
+	{
+		SetLabelText(tempString);
+	}
+	else
+	{
+		SetLabelText(L"INTEGRITY");
+	}
+
+	SetDisplayValue(m_fIntegrity);
 }
 
 void CHudIntegrity::OnThink()
@@ -37,30 +52,10 @@ void CHudIntegrity::OnThink()
 	if (!pPlayer)
 		return;
 	m_fIntegrity = max(pPlayer->GetIntegrity(), 0);
-
-	char szDigitsBuf[8];
-	memset(szDigitsBuf, 0, 8);
-
-	itoa((int)m_fIntegrity, szDigitsBuf, 10);
-	for (int i = 0; i < 7; i++)
-	{
-		szDigits[i] = szDigitsBuf[i];
-	}
+	SetDisplayValue(m_fIntegrity);
 }
 
 void CHudIntegrity::Paint()
 {
-	//surface()->DrawSetColor(m_HullColor);
-	vgui::surface()->DrawSetColor(m_HullColor);
-
-	vgui::surface()->DrawSetTextFont(m_hTextFont);
-	
-	vgui::surface()->DrawSetTextColor(m_TextColor);
-	vgui::surface()->DrawSetTextPos(text_xpos, text_ypos);
-	vgui::surface()->DrawPrintText(szLabel, szLabelSiz);
-
-	vgui::surface()->DrawSetTextFont(m_hTextFont2);
-	vgui::surface()->DrawSetTextPos(digit_xpos, digit_ypos);
-	vgui::surface()->DrawPrintText(szDigits, wcslen(szDigits));
-	
+	BaseClass::Paint();	
 }

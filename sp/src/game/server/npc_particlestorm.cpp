@@ -1,5 +1,6 @@
 #include "cbase.h"
 #include "particle_parse.h"
+#include "vortex_controller.h"
 
 class CNPCParticleStorm : public CBaseEntity {
 public:
@@ -20,6 +21,7 @@ private:
 	int m_nSoundCounter;
 	bool m_bHasParticleSystem;
 	bool m_bSilent;
+	CGravityVortexController* m_pVortexCtl;
 	DECLARE_DATADESC();
 };
 
@@ -49,6 +51,8 @@ void CNPCParticleStorm::Spawn()
 	}
 
 	m_nSoundCounter = 0;
+
+	m_pVortexCtl = CGravityVortexController::Create(GetAbsOrigin(), 256, 75, 0.2f);
 
 	BaseClass::Spawn();
 }
@@ -95,6 +99,7 @@ void CNPCParticleStorm::InputVanish(inputdata_t& input)
 	SetNextThink(TICK_NEVER_THINK);
 	StopSound("NPC_ParticleStorm.Hit");
 	StopSound("NPC_ParticleStorm.Grind");
+	UTIL_Remove(m_pVortexCtl);
 	UTIL_Remove(this);
 }
 
@@ -175,6 +180,10 @@ void CNPCParticleStorm::Think()
 			}
 		}
 	}
+
+	//m_pVortexCtl->StartPull(GetAbsOrigin(), 256, 150, 0.2f);
+
+	
 
 	if (m_nSoundCounter == 5)
 	{

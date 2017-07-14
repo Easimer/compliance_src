@@ -1308,6 +1308,27 @@ ChunkFileResult_t HandleNoDynamicShadowsEnt( entity_t *pMapEnt )
 	return ( ChunkFile_Ok );
 }
 
+ChunkFileResult_t AddGlobalIllum(entity_t* pMapEnt)
+{
+	// TODO
+	return (ChunkFile_Ok);
+	// env_projectedtexture
+	int i = entity_num;
+	entity_num++;
+	memset(&entities[i], 0, sizeof(entity_t));
+	
+	entity_t* pGIE = &entities[i];
+
+	pGIE->origin = pMapEnt->origin;
+
+	pGIE->epairs = (epair_t*)malloc(sizeof(epair_t));
+	pGIE->epairs->key = (char*)malloc(sizeof(char) * 6);
+	strcpy(pGIE->epairs->key, "classname");
+	pGIE->epairs->key = (char*)malloc(sizeof(char) * 12);
+	strcpy(pGIE->epairs->value, "placeholder");
+	pGIE->epairs->next = NULL;
+	return (ChunkFile_Ok);
+}
 
 static ChunkFileResult_t LoadOverlayDataTransitionKeyCallback( const char *szKey, const char *szValue, mapoverlay_t *pOverlay )
 {
@@ -1674,6 +1695,12 @@ ChunkFileResult_t CMapFile::LoadEntityCallback(CChunkFile *pFile, int nParam)
 			// Clear out this entity.
 			mapent->epairs = NULL;
 			return ( ChunkFile_Ok );
+		}
+
+		// Global illum
+		if (Q_stricmp(pClassName, "light_environment") == 0)
+		{
+			return AddGlobalIllum(mapent);
 		}
 
 		// areaportal entities move their brushes, but don't eliminate

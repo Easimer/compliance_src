@@ -467,6 +467,7 @@ void CHL2_Player::EquipSuit( bool bPlayEffects )
 	BaseClass::EquipSuit();
 	
 	m_HL2Local.m_bDisplayReticle = true;
+	m_HL2Local.m_nFlares = 0;
 
 	if ( bPlayEffects == true )
 	{
@@ -2049,6 +2050,8 @@ void CHL2_Player::FlashlightTurnOn( void )
 	variant_t flashlighton;
 	flashlighton.SetFloat( m_HL2Local.m_flSuitPower / 100.0f );
 	FirePlayerProxyOutput( "OnFlashlightOn", flashlighton, this, this );
+
+	CSoundEnt::InsertSound(SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_EMPTY, 0.2, this);
 }
 
 
@@ -3331,6 +3334,9 @@ bool CHL2_Player::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex 
 	{
 		StopZooming();
 	}
+
+	void WeaponColor_WeaponSwitch(CBasePlayer* pPlayer);
+	WeaponColor_WeaponSwitch(this);
 
 	return BaseClass::Weapon_Switch( pWeapon, viewmodelindex );
 }

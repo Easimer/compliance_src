@@ -29,6 +29,7 @@ public:
 	~CSkyCamera();
 	virtual void Spawn( void );
 	virtual void Activate();
+	virtual void Think();
 
 public:
 	sky3dparams_t	m_skyboxData;

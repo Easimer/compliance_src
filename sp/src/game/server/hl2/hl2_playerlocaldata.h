@@ -48,6 +48,8 @@ public:
 	// Ladder related data
 	CNetworkVar( EHANDLE, m_hLadder );
 	LadderMove_t			m_LadderMove;
+
+	CNetworkVar(long, m_nFlares);
 };
 
 EXTERN_SEND_TABLE(DT_HL2Local);

@@ -30,7 +30,11 @@ private:
 
 	DECLARE_CLASS( CBaseHLCombatWeapon, CBaseCombatWeapon );
 public:
+#if !defined(CLIENT_DLL)
 	DECLARE_NETWORKCLASS();
+#else
+	DECLARE_CLIENTCLASS();
+#endif
 	DECLARE_PREDICTABLE();
 
 	virtual bool	WeaponShouldBeLowered( void );
@@ -55,6 +59,8 @@ public:
 
 	int				m_iPrimaryAttacks;		// # of primary attacks performed with this weapon
 	int				m_iSecondaryAttacks;	// # of secondary attacks performed with this weapon
+
+	CNetworkVar(int, m_iCustomColor);
 
 protected:
 

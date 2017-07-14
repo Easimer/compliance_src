@@ -93,9 +93,29 @@ END_DATADESC()
 
 LINK_ENTITY_TO_CLASS(rnd_generator, CScenarioGenerator)
 
+class CRandomObjective : public CLogicalEntity {
+public:
+	DECLARE_CLASS(CRandomObjective, CLogicalEntity);
+	DECLARE_DATADESC();
+	DECLARE_SERVERCLASS();
+private:
+	CNetworkVar(bool, m_bAllowItem); // Allow objective to be CTF
+	CNetworkVar(bool, m_bAllowEnemy); // Allow objective to be an NPC
+};
+
+BEGIN_DATADESC(CRandomObjective)
+DEFINE_KEYFIELD(m_bAllowItem, FIELD_BOOLEAN, "AllowItem"),
+DEFINE_KEYFIELD(m_bAllowEnemy, FIELD_BOOLEAN, "AllowEnemy"),
+END_DATADESC()
+
+IMPLEMENT_SERVERCLASS_ST(CRandomObjective, DT_RandomObjective)
+SendPropBool(SENDINFO(m_bAllowItem)),
+SendPropBool(SENDINFO(m_bAllowEnemy)),
+END_SEND_TABLE()
+
 LINK_ENTITY_TO_CLASS(rnd_enemy_spawn, CLogicalEntity);
 LINK_ENTITY_TO_CLASS(rnd_supply_spawn, CLogicalEntity);
-LINK_ENTITY_TO_CLASS(rnd_objective, CLogicalEntity);
+LINK_ENTITY_TO_CLASS(rnd_objective, CRandomObjective);
 
 void CScenarioGenerator::Spawn()
 {
@@ -115,6 +135,9 @@ void CScenarioGenerator::Generate()
 	float fStart = gpGlobals->curtime;
 
 	st = (ScenarioType_t)(rand() % ST_MAX);
+
+	CBroadcastRecipientFilter filter;
+	g_pGameRules->MarkAchievement(filter, "COMP_SCENARIOSPLAYED");
 
 	DevMsg("Spawning enemies\n");
 

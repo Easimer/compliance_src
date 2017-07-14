@@ -46,6 +46,12 @@ void RegisterUserMessages( void )
 	usermessages->Register( "AchievementEvent", -1 );
 	usermessages->Register( "UpdateJalopyRadar", -1 );
 
+	usermessages->Register( "Gunsmith_Open", -1 );
+	usermessages->Register( "Gunsmith_SetColor", 4 );
+
+	usermessages->Register( "UpdateSky", 4 );
+	usermessages->Register( "FlareUpdate", 4 );
+
 #ifndef _X360
 	// NVNT register haptic user messages
 	RegisterHapticMessages();

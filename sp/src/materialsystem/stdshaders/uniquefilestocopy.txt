@@ -1,0 +1,5 @@
+..\..\dx9sdk\utilities\dx_proxy.dll 
+D:\SteamLibrary\SteamApps\common\Source SDK Base 2013 Singleplayer\bin\shadercompile.exe 
+D:\SteamLibrary\SteamApps\common\Source SDK Base 2013 Singleplayer\bin\shadercompile_dll.dll 
+D:\SteamLibrary\SteamApps\common\Source SDK Base 2013 Singleplayer\bin\tier0.dll 
+D:\SteamLibrary\SteamApps\common\Source SDK Base 2013 Singleplayer\bin\vstdlib.dll 
