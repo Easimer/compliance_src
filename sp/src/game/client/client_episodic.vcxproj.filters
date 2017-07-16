@@ -1928,12 +1928,6 @@
     <ClInclude Include="ShaderEditor\ShaderEditorSystem.h">
       <Filter>Compliance\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="INewChapters.h">
-      <Filter>Compliance\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="IScenario.h">
-      <Filter>Compliance\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="IMainMenu.h">
       <Filter>Compliance\GUI</Filter>
     </ClInclude>
@@ -3483,12 +3477,6 @@
     </ClCompile>
     <ClCompile Include="hud_suppressor.cpp">
       <Filter>Compliance\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="NewChapters.cpp">
-      <Filter>Compliance\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenario.cpp">
-      <Filter>Compliance\GUI</Filter>
     </ClCompile>
     <ClCompile Include="achievements_compliance.cpp">
       <Filter>Compliance</Filter>
