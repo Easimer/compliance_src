@@ -23,7 +23,11 @@ public:
 	virtual void Init(void);
 	virtual void VidInit(void);
 	virtual void Reset(void);
-	virtual void OnThink(void);
+	//virtual void OnThink(void);
+
+	//void UpdateValues();
+
+	void MsgFunc_UpdateWeapon(bf_read& msg);
 protected:
 	//virtual void Paint();
 private:
@@ -37,6 +41,7 @@ private:
 };
 
 DECLARE_HUDELEMENT(CHudSuppressor);
+DECLARE_HUD_MESSAGE(CHudSuppressor, UpdateWeapon);
 
 CHudSuppressor::CHudSuppressor(const char* pElementName) : CHudElement(pElementName), BaseClass(NULL, "HudSuppressor")
 {
@@ -47,8 +52,8 @@ CHudSuppressor::CHudSuppressor(const char* pElementName) : CHudElement(pElementN
 
 void CHudSuppressor::Init()
 {
+	HOOK_HUD_MESSAGE(CHudSuppressor, UpdateWeapon);
 	Reset();
-	
 }
 
 void CHudSuppressor::VidInit()
@@ -58,13 +63,14 @@ void CHudSuppressor::VidInit()
 
 void CHudSuppressor::Reset()
 {
+	BaseClass::Reset();
 	SetBgColor(Color(0, 0, 0, 128));
 	m_iDurability = 0;
 	m_iMaxDurability = 32;
 	m_nBarHeight = GetTall() / 3;
 	SetPaintEnabled(false);
 	SetPaintBackgroundEnabled(false);
-	SetShouldDisplayValue(true);
+	SetShouldDisplayValue(false);
 
 	wchar_t *tempString = g_pVGuiLocalize->Find("#Compliance_Hud_Suppressor");
 
@@ -79,36 +85,22 @@ void CHudSuppressor::Reset()
 
 	SetDisplayValue(0);
 }
-/*void CHudSuppressor::Paint()
-{
-	vgui::surface()->DrawSetColor(m_HullColor);
-	
-	vgui::surface()->DrawFilledRect(10, m_nBarHeight, GetWide() - 10, m_nBarHeight * 2);
-	vgui::surface()->DrawSetColor(m_ChunkColor);
-	vgui::surface()->DrawFilledRect(10, m_nBarHeight, (int)((GetWide() - 10) * ((float)m_iDurability / (float)m_iMaxDurability)), m_nBarHeight * 2);
-}*/
 
-void CHudSuppressor::OnThink(void)
+void CHudSuppressor::MsgFunc_UpdateWeapon(bf_read& msg)
 {
-	auto pWeapon = GetActiveWeapon();
-	if (!pWeapon)
-	{
-		return;
-	}
-	if (pWeapon->m_bIsSuppressed)
-	{
-		if (m_iDurability != pWeapon->m_iSuppressorDurability)
-		{
-			m_iDurability = pWeapon->m_iSuppressorDurability;
-			m_iMaxDurability = pWeapon->m_iSuppressorMaxDurability;
-			SetDisplayValue((int)(100.0 * ((float)m_iDurability / (float)m_iMaxDurability)));
-		}
-		SetPaintEnabled(true);
-		SetPaintBackgroundEnabled(true);
-	}
-	else
+	int nPercent = msg.ReadLong();
+	if (nPercent == -1)
 	{
 		SetPaintEnabled(false);
 		SetPaintBackgroundEnabled(false);
+		SetShouldDisplayValue(false);
+		SetDisplayValue(0);
+	}
+	else
+	{
+		SetPaintEnabled(true);
+		SetPaintBackgroundEnabled(true);
+		SetShouldDisplayValue(true);
+		SetDisplayValue(nPercent);
 	}
 }

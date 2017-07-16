@@ -3619,6 +3619,9 @@
     <ClCompile Include="item_flare.cpp">
       <Filter>Compliance\Items</Filter>
     </ClCompile>
+    <ClCompile Include="tmod.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

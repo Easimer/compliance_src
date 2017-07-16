@@ -3338,6 +3338,18 @@ bool CHL2_Player::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex 
 	void WeaponColor_WeaponSwitch(CBasePlayer* pPlayer);
 	WeaponColor_WeaponSwitch(this);
 
+	int nPercent = -1;
+
+	if (pWeapon->m_bIsSuppressed)
+	{
+		nPercent = (int)(100.f * (float)pWeapon->m_iSuppressorDurability / (float)pWeapon->m_iSuppressorMaxDurability);
+	}
+
+	CSingleUserRecipientFilter user(this);
+	UserMessageBegin(user, "UpdateWeapon");
+	MessageWriteLong(nPercent);
+	MessageEnd();
+
 	return BaseClass::Weapon_Switch( pWeapon, viewmodelindex );
 }
 

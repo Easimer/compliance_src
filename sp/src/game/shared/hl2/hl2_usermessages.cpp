@@ -46,6 +46,8 @@ void RegisterUserMessages( void )
 	usermessages->Register( "AchievementEvent", -1 );
 	usermessages->Register( "UpdateJalopyRadar", -1 );
 
+	usermessages->Register( "UpdateWeapon", 4 );
+
 	usermessages->Register( "Gunsmith_Open", -1 );
 	usermessages->Register( "Gunsmith_SetColor", 4 );
 

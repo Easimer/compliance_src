@@ -24,7 +24,7 @@ DECLARE_HUD_MESSAGE(CHudFlare, FlareUpdate);
 
 CHudFlare::CHudFlare(const char *pElementName) : CHudElement(pElementName), CHudNumericDisplay(NULL, "HudFlare")
 {
-	SetHiddenBits(HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD);
+	SetHiddenBits(HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_NEEDSUIT);
 }
 
 void CHudFlare::Init()

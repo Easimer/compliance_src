@@ -4,6 +4,7 @@
 #include "weapon_flaregun.h"
 #include "hl2_player.h"
 #include "in_buttons.h"
+#include "eifacev21.h"
 #include "memdbgon.h"
 
 static ConVar sk_plr_dmg_thrown("sk_plr_dmg_thrown", "0");

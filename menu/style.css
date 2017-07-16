@@ -1,0 +1,197 @@
+html, body {
+	/*background-color: black; /* DEBUG ONLY */
+	width: 100%;
+	height: 85%;
+	font-family: sans-serif;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	overflow: hidden;
+}
+
+#logo {
+	display: none;
+}
+
+#menu {
+	/* verticentering*/
+	display: table;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	/* END OF verticentering */
+
+	left: 5em;
+	padding: 2em;
+}
+
+#content {
+	/* verticentering*/
+	display: table-cell;
+	vertical-align: middle;
+	/* END OF verticentering */
+}
+
+.menubtn {
+	width: 80%;
+	height: 2em;
+	margin: 0.4em;
+	padding: 0.4em;
+	padding-left: 1.5em;
+	color: #a7a7a7;
+	transition: background-color 0.5s ease, padding-left 0.5s ease;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.menubtn:hover {
+	background-color: rgba(150, 150, 150, 0.85);
+	padding-left: 2.0em;
+	color: #070707;
+}
+
+.menubtn > a {
+	width: 100%;
+	height: 100%;
+	text-align: middle;
+
+	text-decoration: none;
+	font-weight: bold;
+	color: #a7a7a7;
+	font-size: 1.5em;
+
+	transition: color 0.5s ease;
+}
+
+.page {
+	background-color: #efefef;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	width: 35%;
+}
+
+.page-mainmenu {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	width: 35%;
+}
+
+.pageheader {
+	background-color: rgba(239, 239, 239, 0.2);
+	padding-left: 1.5em;
+}
+
+.menubtn:hover > a {
+	color: #ffffff;
+}
+
+#pages {
+	height: 25em;
+}
+
+ul {
+	list-style-type: none;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+#console {
+    display: none;
+    position: fixed;
+    height: 50vh;
+    width: 25vw;
+    left: 50vw;
+    padding: 1.5em;
+    background: rgba(20, 20, 20, 1.0);
+}
+
+#console-output {
+	background: rgba(40, 40, 40, 0.8);
+	width: 100%;
+	height: 85%;
+	padding: 0.5em;
+	overflow: scroll;
+	font-size: 1em;
+	font-family: monospace;
+}
+
+#console-output::-webkit-scrollbar { 
+    display: none; 
+}
+
+.console-error {
+	color: red;
+}
+
+.console-warning {
+	color: yellow;
+}
+
+
+#overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background-image: url(overlay.png);
+    background-repeat: all;
+    background-position: 0px 0px;
+
+    animation-name: Static;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(4);
+
+    box-shadow: inset 0px 0px 10em rgba(0,0,0,0.4);
+}
+
+@keyframes Static {
+    0% { background-position: 0px 0px; }
+    100% { background-position: 0px 32px; }
+}
+
+#overlay2 {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background-image: url(overlay2.png);
+    background-repeat: all;
+    background-position: 0px 0px;
+
+    animation-name: Static;
+    animation-duration: 0.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(32);
+}

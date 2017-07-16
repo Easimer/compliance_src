@@ -2334,6 +2334,22 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 				SuppressorFailure();
 			}
 		}
+#ifndef CLIENT_DLL
+		if (GetOwner()->IsPlayer())
+		{
+			int nPercent = -1;
+
+			if (m_bIsSuppressed)
+			{
+				nPercent = (int)(100.f * (float)m_iSuppressorDurability / (float)m_iSuppressorMaxDurability);
+			}
+
+			CSingleUserRecipientFilter user(ToBasePlayer(GetOwner()));
+			UserMessageBegin(user, "UpdateWeapon");
+			MessageWriteLong(nPercent);
+			MessageEnd();
+		}
+#endif
 	}
 }
 

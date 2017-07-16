@@ -203,7 +203,16 @@ m_HideTooltip( this, &HTML::BrowserHideToolTip )
 
 	m_unBrowserHandle = INVALID_HTTMLBROWSER;
 	m_SteamAPIContext.Init();
-	if ( m_SteamAPIContext.SteamHTMLSurface() )
+	ISteamHTMLSurface* m_pSurf = m_SteamAPIContext.SteamHTMLSurface();
+	int nTry = 0;
+	while ((m_pSurf = m_SteamAPIContext.SteamHTMLSurface()) == NULL)
+	{
+		ThreadSleep(250);
+		nTry++;
+		if (nTry == 8)
+			break; // give up
+	}
+	if ( m_pSurf )
 	{
 		m_SteamAPIContext.SteamHTMLSurface()->Init();
 		SteamAPICall_t hSteamAPICall = m_SteamAPIContext.SteamHTMLSurface()->CreateBrowser( surface()->GetWebkitHTMLUserAgentString(), NULL );
@@ -1491,13 +1500,15 @@ bool HTML::OnStartRequest( const char *url, const char *target, const char *pchP
 	bool bURLHandled = false;
 	for (int i = 0; i < m_CustomURLHandlers.Count(); i++)
 	{
-		if (!Q_strnicmp(m_CustomURLHandlers[i].url,url, Q_strlen(m_CustomURLHandlers[i].url)))
+		size_t url_len = Q_strlen(m_CustomURLHandlers[i].url);
+		if (!Q_strnicmp(m_CustomURLHandlers[i].url,url, url_len))
 		{
 			// we have a custom handler
 			Panel *targetPanel = m_CustomURLHandlers[i].hPanel;
 			if (targetPanel)
 			{
-				PostMessage(targetPanel, new KeyValues("CustomURL", "url", m_CustomURLHandlers[i].url ) );
+				//PostMessage(targetPanel, new KeyValues("CustomURL", "url", m_CustomURLHandlers[i].url ) );
+				PostMessage(targetPanel, new KeyValues("CustomURL", "url", url));
 			}
 
 			bURLHandled = true;
@@ -1656,7 +1667,9 @@ void HTML::BrowserPopupHTMLWindow( HTML_NewWindow_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserSetHTMLTitle( HTML_ChangedTitle_t *pCmd )
 {
-	PostMessage( GetParent(), new KeyValues( "OnSetHTMLTitle", "title", pCmd->pchTitle ) );
+	vgui::Panel* pParent = GetParent();
+	if (pParent)
+		PostMessage( GetParent(), new KeyValues( "OnSetHTMLTitle", "title", pCmd->pchTitle ) );
 	OnSetHTMLTitle( pCmd->pchTitle );
 }
 

@@ -24,7 +24,6 @@
 #include "filesystem.h"
 #include "matsys_controls/matsyscontrols.h"
 
-#include "INewChapters.h"
 #include "IMainMenu.h"
 #include "IGunsmith.h"
 
@@ -226,12 +225,8 @@ void VGui_CreateGlobalPanels( void )
 #ifdef SIXENSE
 	g_pSixenseInput->CreateGUI( gameToolParent );
 #endif
-
-	ncpanel->Create(GameUiDll);
-	//g_pMainMenu->Create(GameUiDll);
+	g_pMainMenu->Create(GameUiDll);
 	g_pGunsmith->Create(gameParent);
-
-	//SMenu->Create(GameUiDll);
 }
 
 void VGui_Shutdown()
@@ -252,12 +247,8 @@ void VGui_Shutdown()
 	messagechars->Destroy();
 	loadingdisc->Destroy();
 	internalCenterPrint->Destroy();
-
-	ncpanel->Destroy();
-	//g_pMainMenu->Destroy();
+	g_pMainMenu->Destroy();
 	g_pGunsmith->Destroy();
-
-	//SMenu->Destroy();
 
 	if ( g_pClientMode )
 	{
@@ -278,6 +269,8 @@ void VGui_PreRender()
 {
 	VPROF( "VGui_PreRender" );
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+
+	g_pMainMenu->UpdateInGameStatus(engine->IsInGame() && !engine->IsLevelMainMenuBackground());
 
 	// 360 does not use these plaques
 	if ( IsPC() )

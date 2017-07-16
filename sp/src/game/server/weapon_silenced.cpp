@@ -70,13 +70,18 @@ CWeaponSilenced::CWeaponSilenced()
 {
 	m_bFiresUnderwater = true;
 	m_fMinRange1 = 24;
-	m_fMaxRange1 = 1500;
+	m_fMaxRange1 = 250;
 	m_fMinRange2 = 24;
 	m_fMaxRange2 = 200;
-	m_vSpreadCone = VECTOR_CONE_1DEGREES;
+	m_vSpreadCone = VECTOR_CONE_5DEGREES;
+
 	m_bIsSuppressed = true;
 	m_iSuppressorDurability = 16;
 	m_iSuppressorMaxDurability = 16;
+
+	((CBaseCombatWeapon*)this)->m_bIsSuppressed = true;
+	((CBaseCombatWeapon*)this)->m_iSuppressorDurability = 16;
+	((CBaseCombatWeapon*)this)->m_iSuppressorMaxDurability = 16;
 }
 
 void CWeaponSilenced::Precache(void)
@@ -91,6 +96,9 @@ void CWeaponSilenced::Spawn(void)
 	m_bIsSuppressed = true;
 	m_iSuppressorDurability = 16;
 	m_iSuppressorMaxDurability = 16;
+	((CBaseCombatWeapon*)this)->m_bIsSuppressed = true;
+	((CBaseCombatWeapon*)this)->m_iSuppressorDurability = 16;
+	((CBaseCombatWeapon*)this)->m_iSuppressorMaxDurability = 16;
 }
 
 void CWeaponSilenced::DryFire(void)
@@ -144,6 +152,12 @@ void CHEAT_PutSuppressor(const CCommand& cmd)
 	if (!pWeapon)
 		return;
 	pWeapon->m_bIsSuppressed = true;
+
+	int nPercent = (int)(100.f * (float)pWeapon->m_iSuppressorDurability / (float)pWeapon->m_iSuppressorMaxDurability);
+	CSingleUserRecipientFilter user(pPlayer);
+	UserMessageBegin(user, "UpdateWeapon");
+	MessageWriteLong(nPercent);
+	MessageEnd();
 }
 
 void CHEAT_SetSuppressorDurability(const CCommand& cmd)
@@ -160,6 +174,12 @@ void CHEAT_SetSuppressorDurability(const CCommand& cmd)
 	const char* szVal = cmd.ArgV()[1];
 	nVal = V_atoi(szVal);
 	pWeapon->m_iSuppressorDurability = nVal;
+
+	int nPercent = (int)(100.f * (float)pWeapon->m_iSuppressorDurability / (float)nVal);
+	CSingleUserRecipientFilter user(pPlayer);
+	UserMessageBegin(user, "UpdateWeapon");
+	MessageWriteLong(nPercent);
+	MessageEnd();
 }
 void CHEAT_SetSuppressorMaxDurability(const CCommand& cmd)
 {
@@ -175,6 +195,12 @@ void CHEAT_SetSuppressorMaxDurability(const CCommand& cmd)
 	const char* szVal = cmd.ArgV()[1];
 	nVal = V_atoi(szVal);
 	pWeapon->m_iSuppressorMaxDurability = nVal;
+
+	int nPercent = (int)(100.f * (float)pWeapon->m_iSuppressorDurability / (float)nVal);
+	CSingleUserRecipientFilter user(pPlayer);
+	UserMessageBegin(user, "UpdateWeapon");
+	MessageWriteLong(nPercent);
+	MessageEnd();
 }
 
 static ConCommand sv_putsuppressor("sv_putsuppressor", CHEAT_PutSuppressor, "Puts suppressor on the current weapon", FCVAR_CHEAT);

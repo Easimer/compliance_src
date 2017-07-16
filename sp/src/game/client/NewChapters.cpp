@@ -122,7 +122,7 @@ CNCPanel::CNCPanel(vgui::VPANEL parent) : BaseClass(NULL, "NCPanel")
 
 	DevMsg("Reading chapters\n");
 	FileHandle_t hChaptersFile = filesystem->Open("scripts/newch_chaptertitles.txt", "r");
-	
+
 	KeyValues* kv = new KeyValues("chapters");
 
 	while (!filesystem->EndOfFile(hChaptersFile))
@@ -141,7 +141,7 @@ CNCPanel::CNCPanel(vgui::VPANEL parent) : BaseClass(NULL, "NCPanel")
 				break;
 			}
 		}
-		
+
 		char buf2[262];
 
 		strcpy_s(buf2, buffer);
