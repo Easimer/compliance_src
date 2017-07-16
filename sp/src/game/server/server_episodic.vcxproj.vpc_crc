@@ -1,8 +1,8 @@
 [vpc crc file version 2]
 8209bbc3 D:\compliance_src\sp\src\devtools\bin\vpc.exe
 _Nc_VS2013/vpcgame:valve_
-967a1a19 server_episodic.vpc
-cd2921c2 ..\..\game\server\server_base.vpc
+437df9d0 server_episodic.vpc
+37616e8b ..\..\game\server\server_base.vpc
 4832e67a ..\..\vpc_scripts\source_dll_base.vpc
 d752cf80 ..\..\vpc_scripts\platform_dirs.vpc
 6c4a5ff1 ..\..\vpc_scripts\source_base.vpc

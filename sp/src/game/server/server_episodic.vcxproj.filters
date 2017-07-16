@@ -1,6 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Compliance">
+      <UniqueIdentifier>{9C0408C7-75A2-B610-52A2-E700A89F396F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Entities">
+      <UniqueIdentifier>{FB9E46D9-0F3F-E5A3-3514-3EA25413E6C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Items">
+      <UniqueIdentifier>{AB6E58D3-A367-5831-DBDD-D63A3ADB7D13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Tech">
+      <UniqueIdentifier>{4FFA147B-21CF-9635-5307-6F0B00849005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Test">
+      <UniqueIdentifier>{73EED1C3-E503-91D9-ADE8-EEC923E8FE4B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Vehicles">
+      <UniqueIdentifier>{772CAC4F-A632-25DF-69A9-9FC62284DEEF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Weapons">
+      <UniqueIdentifier>{C2442365-21D6-DF0D-D353-E9EE3FA1ECD4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{1680C80B-FF1E-EA4D-9817-CC12254F2E40}</UniqueIdentifier>
     </Filter>
@@ -30,27 +51,6 @@
     </Filter>
     <Filter Include="VPC Scripts">
       <UniqueIdentifier>{A40EE377-781A-C6B9-0C7C-B3BE118D248E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compliance">
-      <UniqueIdentifier>{25cc9b41-3cff-4974-95bc-701be5bdb484}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compliance\Entities">
-      <UniqueIdentifier>{0d3921f8-647f-493d-ac3a-e7a430c7f339}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compliance\Test">
-      <UniqueIdentifier>{d1768b55-2a5b-4df2-bf4b-8fe4c8d61a9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compliance\Vehicles">
-      <UniqueIdentifier>{b7187e91-8921-436a-88a3-111930b1b6a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compliance\Weapons">
-      <UniqueIdentifier>{638d64b2-4875-489b-8024-961097213fbe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compliance\Items">
-      <UniqueIdentifier>{cfd63238-b1bf-47a6-93c0-51525f99deb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Compliance\Tech">
-      <UniqueIdentifier>{c8e0369c-e86a-4641-bd0b-463ac7751d1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +89,30 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PhaseAnchor.h">
+      <Filter>Compliance\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="PhaseField.h">
+      <Filter>Compliance\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="vortex_controller.h">
+      <Filter>Compliance\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game\shared\json.hpp">
+      <Filter>Compliance\Tech</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomizableWeapon.h">
+      <Filter>Compliance\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="proj_psy.h">
+      <Filter>Compliance\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="weapon_psygun.h">
+      <Filter>Compliance\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="xray.h">
+      <Filter>Compliance\Weapons</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\public\mathlib\amd3dx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1805,32 +1829,77 @@
     <ClInclude Include="toolframework_server.h">
       <Filter>Tools Framework</Filter>
     </ClInclude>
-    <ClInclude Include="PhaseAnchor.h">
-      <Filter>Compliance\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="PhaseField.h">
-      <Filter>Compliance\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="proj_psy.h">
-      <Filter>Compliance\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="weapon_psygun.h">
-      <Filter>Compliance\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="xray.h">
-      <Filter>Compliance\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="vortex_controller.h">
-      <Filter>Compliance\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomizableWeapon.h">
-      <Filter>Compliance\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\shared\json.hpp">
-      <Filter>Compliance\Tech</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="npc_particlestorm.cpp">
+      <Filter>Compliance\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_shade.cpp">
+      <Filter>Compliance\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="OverwatchHud.cpp">
+      <Filter>Compliance\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="PhaseAnchor.cpp">
+      <Filter>Compliance\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="PhaseField.cpp">
+      <Filter>Compliance\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="prop_stopwatch.cpp">
+      <Filter>Compliance\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="item_flare.cpp">
+      <Filter>Compliance\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="item_gunsmith.cpp">
+      <Filter>Compliance\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="item_suppkit.cpp">
+      <Filter>Compliance\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomizableWeapon.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenarioGenerator.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="skyctl.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="tmod.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponColor.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="vehicle_horse.cpp">
+      <Filter>Compliance\Vehicles</Filter>
+    </ClCompile>
+    <ClCompile Include="grenade_hopwire.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="proj_psy.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon_decoy.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon_flare.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon_hopwire.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon_psygun.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon_silenced.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="XRay.cpp">
+      <Filter>Compliance\Weapons</Filter>
+    </ClCompile>
     <ClCompile Include="gamedll_replay.cpp">
       <Filter>Replay</Filter>
     </ClCompile>
@@ -3549,78 +3618,6 @@
     </ClCompile>
     <ClCompile Include="toolframework_server.cpp">
       <Filter>Tools Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="PhaseAnchor.cpp">
-      <Filter>Compliance\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="PhaseField.cpp">
-      <Filter>Compliance\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="OverwatchHud.cpp">
-      <Filter>Compliance\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="npc_shade.cpp">
-      <Filter>Compliance\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="vehicle_horse.cpp">
-      <Filter>Compliance\Vehicles</Filter>
-    </ClCompile>
-    <ClCompile Include="proj_psy.cpp">
-      <Filter>Compliance\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="weapon_psygun.cpp">
-      <Filter>Compliance\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="prop_stopwatch.cpp">
-      <Filter>Compliance\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="npc_particlestorm.cpp">
-      <Filter>Compliance\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="weapon_silenced.cpp">
-      <Filter>Compliance\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="XRay.cpp">
-      <Filter>Compliance\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="item_suppkit.cpp">
-      <Filter>Compliance\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="weapon_decoy.cpp">
-      <Filter>Compliance\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="weapon_hopwire.cpp">
-      <Filter>Compliance\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="grenade_hopwire.cpp">
-      <Filter>Compliance\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="ScenarioGenerator.cpp">
-      <Filter>Compliance\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="..\client\achievements_compliance.cpp">
-      <Filter>Compliance</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomizableWeapon.cpp">
-      <Filter>Compliance\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="WeaponColor.cpp">
-      <Filter>Compliance\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="item_gunsmith.cpp">
-      <Filter>Compliance\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="skyctl.cpp">
-      <Filter>Compliance\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="weapon_flare.cpp">
-      <Filter>Compliance\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="item_flare.cpp">
-      <Filter>Compliance\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="tmod.cpp">
-      <Filter>Compliance\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

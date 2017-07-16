@@ -1,6 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Compliance">
+      <UniqueIdentifier>{9C0408C7-75A2-B610-52A2-E700A89F396F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\GUI">
+      <UniqueIdentifier>{D1E3547B-356C-13A4-F1BC-C9FECD8439A8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\HUD">
+      <UniqueIdentifier>{8F42D140-BA29-ECD8-9E99-AA9ACF5583BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Scenario">
+      <UniqueIdentifier>{440CD376-0761-E6AA-85E9-90BA305196F5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Source Shader Editor">
+      <UniqueIdentifier>{E68EC1EC-8DF5-57C6-0D75-940ED1D2C86A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Tech">
+      <UniqueIdentifier>{4FFA147B-21CF-9635-5307-6F0B00849005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Test">
+      <UniqueIdentifier>{73EED1C3-E503-91D9-ADE8-EEC923E8FE4B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compliance\Vehicles">
+      <UniqueIdentifier>{772CAC4F-A632-25DF-69A9-9FC62284DEEF}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Game Shared Header Files">
       <UniqueIdentifier>{CF82B2DC-9C3C-7FC8-20C2-E6C638E4242D}</UniqueIdentifier>
     </Filter>
@@ -101,6 +125,33 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IGunsmith.h">
+      <Filter>Compliance\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMainMenu.h">
+      <Filter>Compliance\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="hud_integrity.h">
+      <Filter>Compliance\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderEditor\ISEdit_ModelRender.h">
+      <Filter>Compliance\Source Shader Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderEditor\IVShaderEditor.h">
+      <Filter>Compliance\Source Shader Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderEditor\SEdit_ModelRender.h">
+      <Filter>Compliance\Source Shader Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderEditor\ShaderEditorSystem.h">
+      <Filter>Compliance\Source Shader Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game\shared\json.hpp">
+      <Filter>Compliance\Tech</Filter>
+    </ClInclude>
+    <ClInclude Include="dss.h">
+      <Filter>Compliance\Test</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\game\shared\activitylist.h">
       <Filter>Game Shared Header Files</Filter>
     </ClInclude>
@@ -1882,6 +1933,42 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="achievements_compliance.cpp">
+      <Filter>Compliance</Filter>
+    </ClCompile>
+    <ClCompile Include="Gunsmith.cpp">
+      <Filter>Compliance\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Compliance\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="hud_flare.cpp">
+      <Filter>Compliance\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="hud_integrity.cpp">
+      <Filter>Compliance\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="hud_suppressor.cpp">
+      <Filter>Compliance\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomObjective.cpp">
+      <Filter>Compliance\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderEditor\SEdit_ModelRender.cpp">
+      <Filter>Compliance\Source Shader Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderEditor\ShaderEditorSystem.cpp">
+      <Filter>Compliance\Source Shader Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicSky.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponMatProxy.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="c_vehicle_horse.cpp">
+      <Filter>Compliance\Vehicles</Filter>
+    </ClCompile>
     <ClCompile Include="mp3player.cpp">
       <Filter>MP3</Filter>
     </ClCompile>

@@ -1015,4 +1015,57 @@ $Project
 		$Lib	tier3
 		$ImpLibexternal steam_api
 	}
+
+	$Folder "Compliance"
+	{
+		$Folder "Entities"
+		{
+			$File "npc_particlestorm.cpp"
+			$File "npc_shade.cpp"
+			$File "OverwatchHud.cpp"
+			$File "PhaseAnchor.cpp"
+			$File "PhaseField.cpp"
+			$File "prop_stopwatch.cpp"
+			$File "PhaseAnchor.h"
+			$File "PhaseField.h"
+			$File "vortex_controller.h"
+		}
+		$Folder "Items"
+		{
+			$File "item_flare.cpp"
+			$File "item_gunsmith.cpp"
+			$File "item_suppkit.cpp"
+		}
+		$Folder "Tech"
+		{
+			$File "$SRCDIR\game\shared\json.hpp"
+		}
+		$Folder "Test"
+		{
+			$File "CustomizableWeapon.cpp"
+			$File "ScenarioGenerator.cpp"
+			$File "skyctl.cpp"
+			$File "tmod.cpp"
+			$File "WeaponColor.cpp"
+			$File "CustomizableWeapon.h"
+		}
+		$Folder "Vehicles"
+		{
+			$File "vehicle_horse.cpp"
+		}
+		$Folder "Weapons"
+		{
+			$File "grenade_hopwire.cpp"
+			$File "proj_psy.cpp"
+			$File "weapon_decoy.cpp"
+			$File "weapon_flare.cpp"
+			$File "weapon_hopwire.cpp"
+			$File "weapon_psygun.cpp"
+			$File "weapon_silenced.cpp"
+			$File "XRay.cpp"
+			$File "proj_psy.h"
+			$File "weapon_psygun.h"
+			$File "xray.h"
+		}
+	}
 }

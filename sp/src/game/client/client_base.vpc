@@ -1266,4 +1266,51 @@ $Project
 		$Libexternal "$LIBCOMMON/libssl" [$LINUXALL]
  	}
 
+	$Folder "Compliance"
+	{
+		$Folder "GUI"
+		{
+			$File	"Gunsmith.cpp"
+			$File	"MainMenu.cpp"
+			$File	"IGunsmith.h"
+			$File	"IMainMenu.h"
+		}
+		$Folder "HUD"
+		{
+			$File	"hud_flare.cpp"
+			$File	"hud_integrity.cpp"
+			$File	"hud_suppressor.cpp"
+			$File	"hud_integrity.h"
+		}
+		$Folder "Scenario"
+		{
+			$File	"RandomObjective.cpp"
+		}
+		$Folder "Source Shader Editor"
+		{
+			$File	"ShaderEditor/SEdit_ModelRender.cpp"
+			$File	"ShaderEditor/ShaderEditorSystem.cpp"
+			$File	"ShaderEditor/ISEdit_ModelRender.h"
+			$File	"ShaderEditor/IVShaderEditor.h"
+			$File	"ShaderEditor/SEdit_ModelRender.h"
+			$File	"ShaderEditor/ShaderEditorSystem.h"
+		}
+		$Folder "Tech"
+		{
+			$File "$SRCDIR\game\shared\json.hpp"
+		}
+		$Folder	"Test"
+		{
+			$File	"DynamicSky.cpp"
+			$File	"WeaponMatProxy.cpp"
+			$File	"dss.h"
+		}
+		$Folder	"Vehicles"
+		{
+			$File	"c_vehicle_horse.cpp"
+		}
+
+		$File "achievements_compliance.cpp"
+	}
+
 }
