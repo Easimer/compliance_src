@@ -117,6 +117,9 @@
     <Library Include="..\..\lib\public\vgui_controls.lib">
       <Filter>Link Libraries</Filter>
     </Library>
+    <Library Include="..\..\lib\public\vmfexport.lib">
+      <Filter>Link Libraries</Filter>
+    </Library>
     <Library Include="..\..\lib\public\vstdlib.lib">
       <Filter>Link Libraries</Filter>
     </Library>
@@ -1940,6 +1943,12 @@
     <ClInclude Include="toolframework_client.h">
       <Filter>Tool Framework</Filter>
     </ClInclude>
+    <ClInclude Include="INewGameWindow.h">
+      <Filter>Compliance\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="PostFX.h">
+      <Filter>Compliance\Tech</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievements_compliance.cpp">
@@ -1974,9 +1983,6 @@
     </ClCompile>
     <ClCompile Include="WeaponMatProxy.cpp">
       <Filter>Compliance\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="c_vehicle_horse.cpp">
-      <Filter>Compliance\Vehicles</Filter>
     </ClCompile>
     <ClCompile Include="mp3player.cpp">
       <Filter>MP3</Filter>
@@ -3498,6 +3504,15 @@
     </ClCompile>
     <ClCompile Include="toolframework_client.cpp">
       <Filter>Tool Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="PostFX.cpp">
+      <Filter>Compliance\Tech</Filter>
+    </ClCompile>
+    <ClCompile Include="NewGameWindow.cpp">
+      <Filter>Compliance\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHitMaterialProxy.cpp">
+      <Filter>Compliance\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

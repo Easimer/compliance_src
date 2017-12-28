@@ -14,20 +14,32 @@ public:
 	DECLARE_DATADESC();
 	virtual void Spawn();
 	virtual void Think();
+	void InputSetTime(inputdata_t& input);
+	void InputTriggerSuit(inputdata_t& input);
+	void InputPause(inputdata_t& input);
+	void InputResume(inputdata_t& input);
+private:
+	void TriggerSuit();
+
 public:
-	double m_flTimeOfDay;
-	double m_flLastTimeOfDay;
+	float m_flTimeOfDay;
+	float m_flLastTimeOfDay;
+	int m_iPaused;
 };
 
 void CDynamicSkyController::Spawn()
 {
-	m_flTimeOfDay = 0;
 	SetThink(&CDynamicSkyController::Think);
 	SetNextThink(gpGlobals->curtime + 1);
 }
 
 void CDynamicSkyController::Think()
 {
+	if (m_iPaused)
+	{
+		SetNextThink(gpGlobals->curtime + 1);
+		return;
+	}
 	bool bOverflow = false;
 	m_flLastTimeOfDay = m_flTimeOfDay;
 	m_flTimeOfDay += 1.0 / (DSS_DAY_LEN * 60);
@@ -45,27 +57,77 @@ void CDynamicSkyController::Think()
 	MessageWriteFloat(m_flTimeOfDay);
 	MessageEnd();
 
-	int iPart = -1;
+	if (
+		(m_flLastTimeOfDay <= 1 && m_flTimeOfDay >= 0) ||
+		(m_flTimeOfDay > 0.25 && m_flLastTimeOfDay < 0.25) ||
+		(m_flTimeOfDay > 0.50 && m_flLastTimeOfDay < 0.50) ||
+		(m_flTimeOfDay > 0.75 && m_flLastTimeOfDay < 0.75)
+		)
+		TriggerSuit();
+}
 
-	if (bOverflow) // 12AM passed
-		iPart = 0;
-	else if (m_flTimeOfDay > 0.25 && m_flLastTimeOfDay < 0.25) // 6AM passed
-		iPart = 1;
-	else if (m_flTimeOfDay > 0.50 && m_flLastTimeOfDay < 0.50) // 12PM passed
-		iPart = 2;
-	else if (m_flTimeOfDay > 0.75 && m_flLastTimeOfDay < 0.75) // 6PM passed
-		iPart = 3;
+void CDynamicSkyController::InputSetTime(inputdata_t & input)
+{
+	float val = input.value.Float();
+	if (val < 0)
+		val = 0;
+	else if (val > 1.0)
+		val = 1;
+	m_flLastTimeOfDay = input.value.Float();
+	m_flTimeOfDay = input.value.Float();
+}
+
+void CDynamicSkyController::InputTriggerSuit(inputdata_t & input)
+{
+	TriggerSuit();
+}
+
+void CDynamicSkyController::InputPause(inputdata_t & input)
+{
+	m_iPaused = 1;
+}
+
+void CDynamicSkyController::InputResume(inputdata_t & input)
+{
+	m_iPaused = 0;
+	Think();
+}
+
+void CDynamicSkyController::TriggerSuit()
+{
+	CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
+
+//	int iPart = -1;
+	if (m_flTimeOfDay >= 0 && m_flTimeOfDay < 0.25)
+	{
+		pPlayer->SetSuitUpdate("!HEV_TIME12AM", FALSE, 0);
+		UTIL_HudHintText(pPlayer, "#compliance_timeis_0");
+	}
+	else if (m_flTimeOfDay >= 0.25 && m_flTimeOfDay < 0.50)
+	{
+		pPlayer->SetSuitUpdate("!HEV_TIME6AM", FALSE, 0);
+		UTIL_HudHintText(pPlayer, "#compliance_timeis_1");
+	}
+	else if (m_flTimeOfDay >= 0.50 && m_flTimeOfDay < 0.75)
+	{
+		pPlayer->SetSuitUpdate("!HEV_TIME12PM", FALSE, 0);
+		UTIL_HudHintText(pPlayer, "#compliance_timeis_2");
+	}
+	else if (m_flTimeOfDay >= 0.75 && m_flTimeOfDay < 1.00)
+	{
+		pPlayer->SetSuitUpdate("!HEV_TIME6PM", FALSE, 0);
+		UTIL_HudHintText(pPlayer, "#compliance_timeis_3");
+	}
 
 	DevMsg("Time is: %f\n", m_flTimeOfDay);
 
-	if (iPart != -1)
+	/*if (iPart != -1)
 	{
-		DevMsg("AYY: %d\n", iPart);
 		CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
 		CFmtStr hint;
 		hint.sprintf("#compliance_timeis_%d", iPart);
 		UTIL_HudHintText(pPlayer, hint.Access());
-		
+
 		switch (iPart)
 		{
 		case 0:
@@ -82,13 +144,17 @@ void CDynamicSkyController::Think()
 			break;
 		}
 
-	}
-	
+	}*/
 }
 
 BEGIN_DATADESC(CDynamicSkyController)
 DEFINE_KEYFIELD(m_flTimeOfDay, FIELD_FLOAT, "timeofday"),
+DEFINE_KEYFIELD(m_iPaused, FIELD_INTEGER, "paused"),
 DEFINE_THINKFUNC(Think),
+DEFINE_INPUTFUNC(FIELD_FLOAT, "SetTime", InputSetTime),
+DEFINE_INPUTFUNC(FIELD_VOID, "TriggerSuit", InputTriggerSuit),
+DEFINE_INPUTFUNC(FIELD_VOID, "Resume", InputResume),
+DEFINE_INPUTFUNC(FIELD_VOID, "Pause", InputPause),
 END_DATADESC()
 
 LINK_ENTITY_TO_CLASS(env_dynamicsky_ctl, CDynamicSkyController);

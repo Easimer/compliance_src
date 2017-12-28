@@ -120,6 +120,8 @@ private:
 	CHandle<C_BaseCombatWeapon>		m_hMyWeapons[MAX_WEAPONS];
 	CHandle< C_BaseCombatWeapon > m_hActiveWeapon;
 
+	int m_iMarked;
+
 #ifdef GLOWS_ENABLE
 	bool				m_bGlowEnabled;
 	bool				m_bOldGlowEnabled;

@@ -819,6 +819,14 @@ private:
 		EHANDLE					m_hTargetEntity;
 	};
 
+	struct DepthTexCache {
+		CUtlVector<CTextureReference> Textures;
+		CUtlVector<bool> Locks;
+		int Resolution;
+	} DepthTexCache_t;
+
+	DepthTexCache m_DepthTextureCaches[4];
+
 private:
 	// Shadow update functions
 	void UpdateStudioShadow( IClientRenderable *pRenderable, ClientShadowHandle_t handle );
@@ -927,7 +935,7 @@ private:
 	ClientShadowHandle_t CreateProjectedTexture( ClientEntityHandle_t entity, int flags );
 
 	// Lock down the usage of a shadow depth texture...must be unlocked use on subsequent views / frames
-	bool	LockShadowDepthTexture( CTextureReference *shadowDepthTexture );
+	bool	LockShadowDepthTexture( CTextureReference *shadowDepthTexture, float dist );
 	void	UnlockAllShadowDepthTextures();
 
 	// Set and clear flashlight target renderable
@@ -1357,7 +1365,36 @@ void CClientShadowMgr::InitDepthTextureShadows()
 #endif
 
 		// Create some number of depth-stencil textures
-		m_DepthTextureCache.Purge();
+		int nTextureResolutions[] = { 2048, 1024, 512, 256 };
+		int nTexturesPerResolution[] = { 0, 18, 24, 36 }; // 0, 3, 4, 6 omnis...but individual envprojtex'es will eat into that
+		int numInits = 0;
+
+		// [CSM]
+
+		for (int j = 0; j < 4; j++)
+		{
+			m_DepthTextureCaches[j].Textures.Purge();
+			m_DepthTextureCaches[j].Locks.Purge();
+
+			m_DepthTextureCaches[j].Resolution = nTextureResolutions[j];
+
+			for (int i = 0; i < nTexturesPerResolution[j]; i++)
+			{
+				CTextureReference depthTex;   // Depth-stencil surface
+				bool bFalse = false;
+
+				char strRTName[64];
+				sprintf(strRTName, "_rt_ShadowDepthTexture_%d", numInits);
+				numInits++;
+
+				depthTex.InitRenderTarget(nTextureResolutions[j], nTextureResolutions[j], RT_SIZE_NO_CHANGE, dstFormat, MATERIAL_RT_DEPTH_ONLY, false, strRTName);
+
+				m_DepthTextureCaches[j].Textures.AddToTail(depthTex);
+				m_DepthTextureCaches[j].Locks.AddToTail(bFalse);
+			}
+		}
+
+		/*m_DepthTextureCache.Purge();
 		m_DepthTextureCacheLocks.Purge();
 		for( int i=0; i < m_nMaxDepthTextureShadows; i++ )
 		{
@@ -1385,7 +1422,7 @@ void CClientShadowMgr::InitDepthTextureShadows()
 
 			m_DepthTextureCache.AddToTail( depthTex );
 			m_DepthTextureCacheLocks.AddToTail( bFalse );
-		}
+		}*/
 
 		materials->EndRenderTargetAllocation();
 	}
@@ -1404,6 +1441,21 @@ void CClientShadowMgr::ShutdownDepthTextureShadows()
 
 			m_DepthTextureCacheLocks.Remove( m_DepthTextureCache.Count()-1 );
 			m_DepthTextureCache.Remove( m_DepthTextureCache.Count()-1 );
+		}
+
+		for (int i = 0; i < 4; i++)
+		{
+			while (m_DepthTextureCaches[i].Textures.Count())
+			{
+				int elem = m_DepthTextureCaches[i].Textures.Count() - 1;
+
+				m_DepthTextureCaches[i].Textures.Tail().Shutdown();
+
+				m_DepthTextureCaches[i].Locks.Remove(elem);
+				m_DepthTextureCaches[i].Textures.Remove(elem);
+			}
+
+			//m_bDepthTexturesAllocated = false;
 		}
 
 		m_bDepthTextureActive = false;
@@ -3934,7 +3986,10 @@ void CClientShadowMgr::ComputeShadowDepthTextures( const CViewSetup &viewSetup )
 		ClientShadow_t& shadow = m_Shadows[ pActiveDepthShadows[j] ];
 
 		CTextureReference shadowDepthTexture;
-		bool bGotShadowDepthTexture = LockShadowDepthTexture( &shadowDepthTexture );
+		
+		float dist = shadow.m_LastOrigin.DistTo(viewSetup.origin);
+
+		bool bGotShadowDepthTexture = LockShadowDepthTexture( &shadowDepthTexture, dist );
 		if ( !bGotShadowDepthTexture )
 		{
 			// If we don't get one, that means we have too many this frame so bind no depth texture
@@ -4110,9 +4165,27 @@ void CClientShadowMgr::ComputeShadowTextures( const CViewSetup &view, int leafCo
 //-------------------------------------------------------------------------------------------------------
 // Lock down the usage of a shadow depth texture...must be unlocked for use on subsequent views / frames
 //-------------------------------------------------------------------------------------------------------
-bool CClientShadowMgr::LockShadowDepthTexture( CTextureReference *shadowDepthTexture )
+bool CClientShadowMgr::LockShadowDepthTexture(CTextureReference *shadowDepthTexture, float dist)
 {
-	for ( int i=0; i < m_DepthTextureCache.Count(); i++ )		// Search for cached shadow depth texture
+	int StartCache = 3;
+	if (dist < 512)
+		StartCache = 1;
+	else if (dist < 1024)
+		StartCache = 2;
+
+	for (int i = StartCache; i < 4; i++)
+	{
+		for (int j = 0; j < m_DepthTextureCaches[i].Textures.Count(); j++)
+		{
+			if (m_DepthTextureCaches[i].Locks[j] == false && m_DepthTextureCaches[i].Textures[j].IsValid()) // is it free?
+			{
+				*shadowDepthTexture = m_DepthTextureCaches[i].Textures[j];
+				m_DepthTextureCaches[i].Locks[j] = true;
+				return m_DepthTextureCaches[i].Resolution;
+			}
+		}
+	}
+	/*for ( int i=0; i < m_DepthTextureCache.Count(); i++ )		// Search for cached shadow depth texture
 	{
 		if ( m_DepthTextureCacheLocks[i] == false )				// If a free one is found
 		{
@@ -4120,7 +4193,7 @@ bool CClientShadowMgr::LockShadowDepthTexture( CTextureReference *shadowDepthTex
 			m_DepthTextureCacheLocks[i] = true;
 			return true;
 		}
-	}
+	}*/
 
 	return false;												// Didn't find it...
 }
@@ -4130,10 +4203,15 @@ bool CClientShadowMgr::LockShadowDepthTexture( CTextureReference *shadowDepthTex
 //------------------------------------------------------------------
 void CClientShadowMgr::UnlockAllShadowDepthTextures()
 {
-	for (int i=0; i< m_DepthTextureCache.Count(); i++ )
+	/*for (int i=0; i< m_DepthTextureCache.Count(); i++ )
 	{
 		m_DepthTextureCacheLocks[i] = false;
-	}
+	}*/
+	for (int j = 0; j < 4; j++)
+		for (int i = 0; i< m_DepthTextureCaches[j].Locks.Count(); i++)
+		{
+			m_DepthTextureCaches[j].Locks[i] = false;
+		}
 	SetViewFlashlightState( 0, NULL );
 }
 

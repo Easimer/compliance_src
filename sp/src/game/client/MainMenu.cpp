@@ -376,6 +376,7 @@ void reload_menu_callback(const CCommand& cmd)
 	//gIMainMenu.Reload();
 	gIMainMenu.Destroy();
 	gIMainMenu.Create(enginevgui->GetPanel(PANEL_GAMEUIDLL));
+	gIMainMenu.UpdateInGameStatus(engine->IsInGame() && !engine->IsLevelMainMenuBackground());
 }
 
 static ConCommand reload_menu("reload_menu", &reload_menu_callback);

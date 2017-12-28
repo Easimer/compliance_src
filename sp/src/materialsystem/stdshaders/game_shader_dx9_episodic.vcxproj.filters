@@ -82,8 +82,12 @@
     <ClCompile Include="screenspace_general.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="chromatic_aberration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ssao.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="stdshader_dx9_20b.txt">
@@ -107,16 +111,18 @@
     <CustomBuild Include="..\..\public\tier0\pointeroverride.asm">
       <Filter>Source Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="game_shader_dx9_episodic.vpc">
+    <CustomBuild Include="game_shader_dx9_compliance.vpc">
       <Filter>VPC Scripts</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <None Include="buildsdkshaders.bat">
-      <Filter></Filter>
+      <Filter>
+      </Filter>
     </None>
     <None Include="buildshaders.bat">
-      <Filter></Filter>
+      <Filter>
+      </Filter>
     </None>
     <None Include="..\..\materialsystem\stdshaders\game_shader_dx9_base.vpc">
       <Filter>VPC Scripts</Filter>
@@ -150,6 +156,12 @@
     </None>
     <None Include="..\..\vpc_scripts\version.vpc">
       <Filter>VPC Scripts</Filter>
+    </None>
+    <None Include="chromatic_aberration_ps2x.fxc">
+      <Filter>Shader Source\fxc</Filter>
+    </None>
+    <None Include="ssao_ps2x.fxc">
+      <Filter>Shader Source\fxc</Filter>
     </None>
   </ItemGroup>
 </Project>

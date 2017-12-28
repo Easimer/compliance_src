@@ -1873,9 +1873,6 @@
     <ClCompile Include="WeaponColor.cpp">
       <Filter>Compliance\Test</Filter>
     </ClCompile>
-    <ClCompile Include="vehicle_horse.cpp">
-      <Filter>Compliance\Vehicles</Filter>
-    </ClCompile>
     <ClCompile Include="grenade_hopwire.cpp">
       <Filter>Compliance\Weapons</Filter>
     </ClCompile>

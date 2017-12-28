@@ -517,6 +517,9 @@ protected:
 
 	CNetworkHandle( CBaseCombatWeapon, m_hActiveWeapon );
 
+	// Is marked by player (0 == not, 1 == yes, enemy, 2 == yes, friendly)
+	CNetworkVar(int, m_iMarked);
+
 	friend class CCleanupDefaultRelationShips;
 	
 	IntervalTimer m_aliveTimer;

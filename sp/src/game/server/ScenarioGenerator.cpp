@@ -50,9 +50,13 @@ static struct { char* szWeaponName; char* szAmmoName; } weapon_types[] = {
 	{ "weapon_pistol", "item_ammo_pistol" },
 	{ "weapon_smg1", "item_ammo_smg1" },
 	{ "weapon_ar2", "item_ammo_ar2" },
+	{ "weapon_crowbar", NULL },
+	{ "weapon_rpg", "item_rpg_round" },
+	{ "weapon_frag", "weapon_frag" }, // technically this has no ammo but we need to spawn it multiple times, unless the crowbar
+	{ "weapon_357", "item_ammo_357" },
 };
 
-#define WEAPON_TYPES 3
+#define WEAPON_TYPES 7
 
 static char* item_types[] = {
 	"item_healthkit",
@@ -85,10 +89,13 @@ public:
 	void Think();
 private:
 	void Generate();
+
+	int m_iDifficulty;
 };
 
 BEGIN_DATADESC(CScenarioGenerator)
 DEFINE_THINKFUNC(Think),
+DEFINE_KEYFIELD(m_iDifficulty, FIELD_INTEGER, "difficulty"),
 END_DATADESC()
 
 LINK_ENTITY_TO_CLASS(rnd_generator, CScenarioGenerator)
@@ -98,6 +105,9 @@ public:
 	DECLARE_CLASS(CRandomObjective, CLogicalEntity);
 	DECLARE_DATADESC();
 	DECLARE_SERVERCLASS();
+
+	void Spawn();
+	void Generate();
 private:
 	CNetworkVar(bool, m_bAllowItem); // Allow objective to be CTF
 	CNetworkVar(bool, m_bAllowEnemy); // Allow objective to be an NPC
@@ -131,6 +141,7 @@ void CScenarioGenerator::Generate()
 	CBaseEntity* pEnt;
 	CObjective* pObj = NULL;
 	int weapon_flags = 0;
+	CBasePlayer* pPlayer;
 
 	float fStart = gpGlobals->curtime;
 
@@ -138,6 +149,10 @@ void CScenarioGenerator::Generate()
 
 	CBroadcastRecipientFilter filter;
 	g_pGameRules->MarkAchievement(filter, "COMP_SCENARIOSPLAYED");
+
+	pPlayer = UTIL_GetLocalPlayer();
+	if (!pPlayer)
+		DevMsg("No player!\n");
 
 	DevMsg("Spawning enemies\n");
 
@@ -174,8 +189,16 @@ void CScenarioGenerator::Generate()
 		DevMsg("Enemy: %s\n", enemy_types[i].szName);
 		CBaseCombatCharacter* pEnemy = (CBaseCombatCharacter*)CBaseEntity::Create(enemy_types[i].szName, pEnt->GetAbsOrigin(), pEnt->GetAbsAngles());
 		pEnemy->AddClassRelationship(CLASS_PLAYER, Disposition_t::D_HT, 100);
+		if (pPlayer)
+		{
+			//pPlayer->AddClassRelationship(pEnemy->Classify(), Disposition_t::D_HT, 100);
+			pPlayer->AddEntityRelationship(pEnemy, Disposition_t::D_HT, 100);
+		}
 		if (enemy_types[i].bHaveWeapon)
-			pEnemy->Weapon_Equip((CBaseCombatWeapon*)CBaseCombatWeapon::Create("weapon_smg1", pEnemy->GetAbsOrigin(), pEnemy->GetAbsAngles()));
+			if(rand() & 1)
+				pEnemy->Weapon_Equip((CBaseCombatWeapon*)CBaseCombatWeapon::Create("weapon_smg1", pEnemy->GetAbsOrigin(), pEnemy->GetAbsAngles()));
+			else
+				pEnemy->Weapon_Equip((CBaseCombatWeapon*)CBaseCombatWeapon::Create("weapon_ar2", pEnemy->GetAbsOrigin(), pEnemy->GetAbsAngles()));
 		
 	next_enemy:
 		UTIL_Remove(pEnt);
@@ -191,9 +214,11 @@ void CScenarioGenerator::Generate()
 		if ((rand() & 1)) // should we spawn weapon/ammo or item
 		{
 			i = rand() % WEAPON_TYPES;
+			if (weapon_types[i].szAmmoName == NULL) // this weapon was not meant to be spawned as supply
+				goto next_item;
 			if ((rand() & 1)) // should we spawn ammo or weapon?
 			{
-				if (weapon_flags & (1 << i)) // only if we've already spawned the weapon
+				if (weapon_flags & (1 << i)) // only if we've already spawned the weapon and weapon has ammo
 				{
 					DevMsg("Spawning ammo for %s\n", weapon_types[i].szWeaponName);
 					CBaseEntity::Create(weapon_types[i].szAmmoName, pEnt->GetAbsOrigin(), pEnt->GetAbsAngles());
@@ -216,8 +241,34 @@ void CScenarioGenerator::Generate()
 	}
 
 	// Give player weapons
-
-	
+	int max_pwep;
+	switch (m_iDifficulty)
+	{
+	case 0: // Easy/Hardcore (hardcore means the level is hard, but the player shouldn't have many weapons)
+		max_pwep = 3;
+		break;
+	case 2: // Hard
+		max_pwep = 7;
+		break;
+	case 1: // Normal
+	default:
+		max_pwep = 5;
+		break;
+	}
+	if (pPlayer)
+	{
+		for (int i = 0; i < max_pwep; i++)
+		{
+			int r = rand() % WEAPON_TYPES;
+			if (weapon_types[r].szAmmoName == NULL && (weapon_flags & (1 << i))) // don't spawn weapons marked that has no ammo and we've already spawned
+				continue;
+			pPlayer->GiveNamedItem(weapon_types[r].szWeaponName);
+			if (weapon_types[r].szAmmoName == NULL)
+			{
+				weapon_flags |= (1 << i); // mark weapon spawned
+			}
+		}
+	}
 
 	DevMsg("Scenario generated under %f seconds\n", gpGlobals->curtime - fStart);
 
@@ -256,4 +307,15 @@ void CScenarioGenerator::Think()
 		}
 		UTIL_Remove(this);
 	}
+}
+
+void CRandomObjective::Spawn()
+{
+	BaseClass::Spawn();
+	Generate();
+}
+
+void CRandomObjective::Generate()
+{
+
 }

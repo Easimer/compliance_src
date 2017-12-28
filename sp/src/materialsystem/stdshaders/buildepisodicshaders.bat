@@ -8,7 +8,7 @@ rem == Set the absolute path to your mod's game directory here ==
 set GAMEDIR=%cd%\..\..\..\game\mod_episodic
 
 rem == Set the relative or absolute path to Source SDK Base 2013 Singleplayer\bin ==
-set SDKBINDIR=D:\SteamLibrary\SteamApps\common\Source SDK Base 2013 Singleplayer\bin
+set SDKBINDIR=D:\Steam\steamapps\common\Source SDK Base 2013 Singleplayer\bin
 
 rem ==  Set the Path to your mod's root source code ==
 rem This should already be correct, accepts relative paths only!
@@ -19,5 +19,3 @@ rem ====================================
 
 
 call buildsdkshaders.bat
-call buildepisodicshaders.bat
-call buildhl2shaders.bat

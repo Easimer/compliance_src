@@ -8,6 +8,8 @@
 #include "c_baseplayer.h"
 #include "tier0/memdbgon.h" 
 
+ConVar hud_integrity_show("hud_integrity_show", "1", 0, "Shows/hides the Integrity HUD widget");
+
 DECLARE_HUDELEMENT(CHudIntegrity);
 CHudIntegrity::CHudIntegrity(const char* pElementName) : CHudElement(pElementName), BaseClass(NULL, "HudIntegrity")
 {
@@ -57,5 +59,6 @@ void CHudIntegrity::OnThink()
 
 void CHudIntegrity::Paint()
 {
-	BaseClass::Paint();	
+	if(hud_integrity_show.GetInt() == 1)
+		BaseClass::Paint();	
 }

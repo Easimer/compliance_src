@@ -1,1 +1,1 @@
-devtools\bin\vpc.exe /episodic +game /mksln compliance.sln
+devtools\bin\vpc.exe /episodic +shaders +game /mksln compliance.sln

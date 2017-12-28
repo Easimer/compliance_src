@@ -438,6 +438,8 @@ void CHL2_Player::Precache( void )
 	PrecacheScriptSound( "HL2Player.TrainUse" );
 	PrecacheScriptSound( "HL2Player.Use" );
 	PrecacheScriptSound( "HL2Player.BurnPain" );
+
+	PrecacheModel("models/police.mdl");
 }
 
 //-----------------------------------------------------------------------------
@@ -1113,12 +1115,13 @@ void CHL2_Player::PlayerRunCommand(CUserCmd *ucmd, IMoveHelper *moveHelper)
 //-----------------------------------------------------------------------------
 void CHL2_Player::Spawn(void)
 {
-
 #ifndef HL2MP
 #ifndef PORTAL
-	SetModel( "models/player.mdl" );
+	//SetModel( "models/player.mdl" );
 #endif
 #endif
+
+	SetModel("models/police.mdl");
 
 	BaseClass::Spawn();
 
@@ -1147,6 +1150,9 @@ void CHL2_Player::Spawn(void)
 	GetPlayerProxy();
 
 	SetFlashlightPowerDrainScale( 1.0f );
+	RemoveEffects(EF_NOINTERP);
+	SetNumAnimOverlays(3);
+	ResetAnimation();
 }
 
 //-----------------------------------------------------------------------------
@@ -3350,7 +3356,14 @@ bool CHL2_Player::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex 
 	MessageWriteLong(nPercent);
 	MessageEnd();
 
-	return BaseClass::Weapon_Switch( pWeapon, viewmodelindex );
+	bool bRet = BaseClass::Weapon_Switch( pWeapon, viewmodelindex );
+
+	if (bRet)
+	{
+		ResetAnimation();
+	}
+
+	return bRet;
 }
 
 
@@ -3951,3 +3964,21 @@ void CLogicPlayerProxy::InputSuppressCrosshair( inputdata_t &inputdata )
 	pPlayer->SuppressCrosshair( true );
 }
 #endif // PORTAL
+
+// Compliance
+
+void CHL2_Player::ResetAnimation(void)
+{
+	if (IsAlive())
+	{
+		SetSequence(-1);
+		SetActivity(ACT_INVALID);
+
+		if (!GetAbsVelocity().x && !GetAbsVelocity().y)
+			SetAnimation(PLAYER_IDLE);
+		else if ((GetAbsVelocity().x || GetAbsVelocity().y) && (GetFlags() & FL_ONGROUND))
+			SetAnimation(PLAYER_WALK);
+		else if (GetWaterLevel() > 1)
+			SetAnimation(PLAYER_WALK);
+	}
+}

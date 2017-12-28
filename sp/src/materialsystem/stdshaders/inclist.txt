@@ -1,7 +1,0 @@
-fxctmp9_tmp\example_model_ps20b.inc
-fxctmp9_tmp\example_model_vs20.inc
-fxctmp9_tmp\SDK_Bloom_ps20.inc
-fxctmp9_tmp\SDK_Bloom_ps20b.inc
-fxctmp9_tmp\SDK_screenspaceeffect_vs20.inc
-fxctmp9_tmp\SDK_bloomadd_ps20.inc
-fxctmp9_tmp\SDK_bloomadd_ps20b.inc

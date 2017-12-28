@@ -316,6 +316,8 @@ public:
 	static CViewRender *	GetMainView() { return assert_cast<CViewRender *>( view ); }
 
 	void			AddViewToScene( CRendering3dView *pView ) { m_SimpleExecutor.AddView( pView ); }
+
+	void PerformPostProcessEffects(int x, int y, int width, int height);
 protected:
 	// Sets up the view parameters for all views (left, middle and right eyes).
     void            SetUpViews();

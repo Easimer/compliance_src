@@ -2000,9 +2000,13 @@ void CAI_BaseNPC::OnLooked( int iDistance )
 	{
 		if ( pSightEnt->IsPlayer() )
 		{
-			// if we see a client, remember that (mostly for scripted AI)
-			SetCondition(COND_SEE_PLAYER);
-			m_flLastSawPlayerTime = gpGlobals->curtime;
+			// is the player truly visible?
+			if (LookerCouldSeeTargetInDarkness(this, pSightEnt))
+			{
+				// if we see a client, remember that (mostly for scripted AI)
+				SetCondition(COND_SEE_PLAYER);
+				m_flLastSawPlayerTime = gpGlobals->curtime;
+			}
 		}
 
 		Disposition_t relation = IRelationType( pSightEnt );

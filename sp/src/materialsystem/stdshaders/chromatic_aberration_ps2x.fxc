@@ -1,0 +1,32 @@
+#define HDRTYPE HDR_TYPE_NONE
+#include "common_ps_fxc.h"
+
+sampler RT : register(s0);
+float scale : register(c0);
+
+float4 main( float2 uv : TEXCOORD0 ) : COLOR
+{
+	float centerBuffer = 0.15;
+	float vignetteStrength = 0.6;
+	float aberrationStrength = 0.8;
+
+	float chrDist;
+	float vigDist;
+
+	float2 vecDist = uv - (0.5, 0.5);
+	chrDist = vigDist = length(vecDist);
+	if( chrDist < 0.0 ) chrDist = 0.0;
+	
+	float2 uvR = uv * (1.0 + chrDist * 0.02 * aberrationStrength);
+	float2 uvB = uv * (1.0 - chrDist * 0.02 * aberrationStrength);
+
+	float4 c = (0, 0, 0, 1);
+
+	c.x = tex2D(RT, uvR).x;
+	c.y = tex2D(RT, uv).y;
+	c.z = tex2D(RT, uvB).z;
+
+	c *= 1.0 - vigDist * vignetteStrength;
+
+	return FinalOutput(c, 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE);
+}

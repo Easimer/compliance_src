@@ -1,0 +1,43 @@
+//-----------------------------------------------------------------------------
+//	VMFEXPORT.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$Macro SRCDIR		"../.."
+$Include "$SRCDIR\vpc_scripts\source_lib_base.vpc"
+
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories		"$BASE,$SRCDIR\utils\common"
+	}
+}
+
+$Project "vmfexport"
+{
+	$Folder	"Header Files"
+	{
+		$Folder	"VMF"
+		{
+			$File			"class.h"
+			$File			"property.h"
+			$File			"serializable.h"
+		}
+	}
+	$Folder	"Source Files"
+	{
+		$File			"vmfexport.cpp"
+		$Folder	"VMF"
+		{
+			$File			"class.cpp"
+			$File			"property.cpp"
+			$File			"serializable.cpp"
+		}
+	}
+	$Folder "Link Libraries"
+	{
+		$Lib			tier2
+	}
+}

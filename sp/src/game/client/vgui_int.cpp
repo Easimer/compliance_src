@@ -26,6 +26,7 @@
 
 #include "IMainMenu.h"
 #include "IGunsmith.h"
+#include "INewGameWindow.h"
 
 #ifdef SIXENSE
 #include "sixense/in_sixense.h"
@@ -200,7 +201,7 @@ void VGui_CreateGlobalPanels( void )
 {
 	VPANEL gameToolParent = enginevgui->GetPanel( PANEL_CLIENTDLL_TOOLS );
 	VPANEL toolParent = enginevgui->GetPanel( PANEL_TOOLS );
-	VPANEL GameUiDll = enginevgui->GetPanel( PANEL_GAMEUIDLL);
+	//VPANEL GameUiDll = enginevgui->GetPanel( PANEL_GAMEUIDLL);
 	VPANEL gameParent = enginevgui->GetPanel( PANEL_CLIENTDLL );
 #if defined( TRACK_BLOCKING_IO )
 	VPANEL gameDLLPanel = enginevgui->GetPanel( PANEL_GAMEDLL );
@@ -225,8 +226,9 @@ void VGui_CreateGlobalPanels( void )
 #ifdef SIXENSE
 	g_pSixenseInput->CreateGUI( gameToolParent );
 #endif
-	g_pMainMenu->Create(GameUiDll);
+	//g_pMainMenu->Create(GameUiDll);
 	g_pGunsmith->Create(gameParent);
+	//g_pNewGameWindow->Create(GameUiDll);
 }
 
 void VGui_Shutdown()
@@ -247,8 +249,9 @@ void VGui_Shutdown()
 	messagechars->Destroy();
 	loadingdisc->Destroy();
 	internalCenterPrint->Destroy();
-	g_pMainMenu->Destroy();
+	//g_pMainMenu->Destroy();
 	g_pGunsmith->Destroy();
+	//g_pNewGameWindow->Destroy();
 
 	if ( g_pClientMode )
 	{
@@ -270,7 +273,7 @@ void VGui_PreRender()
 	VPROF( "VGui_PreRender" );
 	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
-	g_pMainMenu->UpdateInGameStatus(engine->IsInGame() && !engine->IsLevelMainMenuBackground());
+	//g_pMainMenu->UpdateInGameStatus(engine->IsInGame() && !engine->IsLevelMainMenuBackground());
 
 	// 360 does not use these plaques
 	if ( IsPC() )

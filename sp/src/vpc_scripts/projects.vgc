@@ -27,7 +27,7 @@ $Project "fgdlib"
 $Project "game_shader_dx9"
 {
 	"materialsystem\stdshaders\game_shader_dx9_hl2.vpc" [$HL2]
-	"materialsystem\stdshaders\game_shader_dx9_episodic.vpc"  [$EPISODIC]
+	"materialsystem\stdshaders\game_shader_dx9_compliance.vpc"  [$EPISODIC]
 }
 
 $Project "glview"
@@ -131,3 +131,12 @@ $Project "vvis_launcher"
 	"utils\vvis_launcher\vvis_launcher.vpc" [$WIN32]
 }
 
+$Project "vmfexport"
+{
+	"utils\vmfexport\vmfexport.vpc" [$WIN32||$POSIX]
+}
+
+$Project "vmfexport_test"
+{
+	"utils\vmfexport_test\vmfexport_test.vpc" [$WIN32||$POSIX]
+}

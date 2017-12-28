@@ -1264,6 +1264,8 @@ $Project
 		$Libexternal "$LIBCOMMON/libcurl" [$LINUXALL]
 		$Libexternal "$LIBCOMMON/libcurlssl" [$LINUXALL]
 		$Libexternal "$LIBCOMMON/libssl" [$LINUXALL]
+
+		$Lib		vmfexport
  	}
 
 	$Folder "Compliance"

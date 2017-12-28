@@ -280,6 +280,8 @@ public:
 	inline void EnableCappedPhysicsDamage();
 	inline void DisableCappedPhysicsDamage();
 
+	void ResetAnimation();
+
 	// HUD HINTS
 	void DisplayLadderHudHint();
 

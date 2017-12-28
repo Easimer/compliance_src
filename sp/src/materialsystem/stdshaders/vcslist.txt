@@ -1,7 +1,0 @@
-..\..\..\game\hl2\shaders\fxc\example_model_ps20b.vcs
-..\..\..\game\hl2\shaders\fxc\example_model_vs20.vcs
-..\..\..\game\hl2\shaders\fxc\SDK_Bloom_ps20.vcs
-..\..\..\game\hl2\shaders\fxc\SDK_Bloom_ps20b.vcs
-..\..\..\game\hl2\shaders\fxc\SDK_screenspaceeffect_vs20.vcs
-..\..\..\game\hl2\shaders\fxc\SDK_bloomadd_ps20.vcs
-..\..\..\game\hl2\shaders\fxc\SDK_bloomadd_ps20b.vcs
