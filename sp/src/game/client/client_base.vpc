@@ -1276,6 +1276,8 @@ $Project
 			$File	"MainMenu.cpp"
 			$File	"IGunsmith.h"
 			$File	"IMainMenu.h"
+			$File	"INewGameWindow.h"
+			$File	"NewGameWindow.cpp"
 		}
 		$Folder "HUD"
 		{
@@ -1300,16 +1302,18 @@ $Project
 		$Folder "Tech"
 		{
 			$File "$SRCDIR\game\shared\json.hpp"
+			$File "PostFX.cpp"
+			$File "PostFX.h"
 		}
 		$Folder	"Test"
 		{
 			$File	"DynamicSky.cpp"
 			$File	"WeaponMatProxy.cpp"
 			$File	"dss.h"
+			$File	"PlayerHitMaterialProxy.cpp"
 		}
 		$Folder	"Vehicles"
 		{
-			$File	"c_vehicle_horse.cpp"
 		}
 
 		$File "achievements_compliance.cpp"

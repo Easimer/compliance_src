@@ -70,6 +70,9 @@
     <ClCompile Include="Bloom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="chromatic_aberration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="example_model_dx9.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -82,16 +85,18 @@
     <ClCompile Include="screenspace_general.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="chromatic_aberration.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ssao.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
     <CustomBuild Include="stdshader_dx9_20b.txt">
       <Filter>Shader Source</Filter>
+    </CustomBuild>
+    <CustomBuild Include="chromatic_aberration_ps2x.fxc">
+      <Filter>Shader Source\fxc</Filter>
     </CustomBuild>
     <CustomBuild Include="example_model_ps20b.fxc">
       <Filter>Shader Source\fxc</Filter>
@@ -108,6 +113,9 @@
     <CustomBuild Include="SDK_screenspaceeffect_vs20.fxc">
       <Filter>Shader Source\fxc</Filter>
     </CustomBuild>
+    <CustomBuild Include="ssao_ps2x.fxc">
+      <Filter>Shader Source\fxc</Filter>
+    </CustomBuild>
     <CustomBuild Include="..\..\public\tier0\pointeroverride.asm">
       <Filter>Source Files</Filter>
     </CustomBuild>
@@ -117,12 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="buildsdkshaders.bat">
-      <Filter>
-      </Filter>
+      <Filter></Filter>
     </None>
     <None Include="buildshaders.bat">
-      <Filter>
-      </Filter>
+      <Filter></Filter>
     </None>
     <None Include="..\..\materialsystem\stdshaders\game_shader_dx9_base.vpc">
       <Filter>VPC Scripts</Filter>
@@ -156,12 +162,6 @@
     </None>
     <None Include="..\..\vpc_scripts\version.vpc">
       <Filter>VPC Scripts</Filter>
-    </None>
-    <None Include="chromatic_aberration_ps2x.fxc">
-      <Filter>Shader Source\fxc</Filter>
-    </None>
-    <None Include="ssao_ps2x.fxc">
-      <Filter>Shader Source\fxc</Filter>
     </None>
   </ItemGroup>
 </Project>

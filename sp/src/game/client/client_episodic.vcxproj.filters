@@ -134,6 +134,9 @@
     <ClInclude Include="IMainMenu.h">
       <Filter>Compliance\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="INewGameWindow.h">
+      <Filter>Compliance\GUI</Filter>
+    </ClInclude>
     <ClInclude Include="hud_integrity.h">
       <Filter>Compliance\HUD</Filter>
     </ClInclude>
@@ -150,6 +153,9 @@
       <Filter>Compliance\Source Shader Editor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game\shared\json.hpp">
+      <Filter>Compliance\Tech</Filter>
+    </ClInclude>
+    <ClInclude Include="PostFX.h">
       <Filter>Compliance\Tech</Filter>
     </ClInclude>
     <ClInclude Include="dss.h">
@@ -1943,12 +1949,6 @@
     <ClInclude Include="toolframework_client.h">
       <Filter>Tool Framework</Filter>
     </ClInclude>
-    <ClInclude Include="INewGameWindow.h">
-      <Filter>Compliance\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="PostFX.h">
-      <Filter>Compliance\Tech</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievements_compliance.cpp">
@@ -1958,6 +1958,9 @@
       <Filter>Compliance\GUI</Filter>
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
+      <Filter>Compliance\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="NewGameWindow.cpp">
       <Filter>Compliance\GUI</Filter>
     </ClCompile>
     <ClCompile Include="hud_flare.cpp">
@@ -1978,7 +1981,13 @@
     <ClCompile Include="ShaderEditor\ShaderEditorSystem.cpp">
       <Filter>Compliance\Source Shader Editor</Filter>
     </ClCompile>
+    <ClCompile Include="PostFX.cpp">
+      <Filter>Compliance\Tech</Filter>
+    </ClCompile>
     <ClCompile Include="DynamicSky.cpp">
+      <Filter>Compliance\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHitMaterialProxy.cpp">
       <Filter>Compliance\Test</Filter>
     </ClCompile>
     <ClCompile Include="WeaponMatProxy.cpp">
@@ -3504,15 +3513,6 @@
     </ClCompile>
     <ClCompile Include="toolframework_client.cpp">
       <Filter>Tool Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="PostFX.cpp">
-      <Filter>Compliance\Tech</Filter>
-    </ClCompile>
-    <ClCompile Include="NewGameWindow.cpp">
-      <Filter>Compliance\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerHitMaterialProxy.cpp">
-      <Filter>Compliance\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

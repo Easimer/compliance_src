@@ -10,4 +10,15 @@ $Include "$SRCDIR\materialsystem\stdshaders\game_shader_dx9_base.vpc"
 
 $Project "Shaders (Compliance)"
 {
+	$Folder	"Source Files"
+	{
+		$File	"chromatic_aberration.cpp"
+		$File	"ssao.cpp"
+	}
+
+	$Folder "Shader Source"
+	{
+		$File	"chromatic_aberration_ps2x.fxc"
+		$File	"ssao_ps2x.fxc"
+	}
 }
